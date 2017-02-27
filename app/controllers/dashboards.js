@@ -51,7 +51,11 @@ module.exports.set = function(app) {
         dashboards.dashboards.forEach((dash) => { dashboard = (dash.id == request.params.id) ? dash : null });
 
         var device = {};
-        dashboard.devices.forEach((dev) => { device = (dev.id == request.params.deviceId) ? dev : null });
+        dashboard.devices.forEach((dev) => {
+            if (dev.id == request.params.deviceId) {
+                device = dev
+            }
+        });
 
         //get device templates
         var files = fs.readdirSync(__dirname + "/../views/devices/");
