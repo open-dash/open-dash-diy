@@ -1,5 +1,7 @@
 $(document).ready(function() {
     //alert(value.id);
+    $('#dashboard').css('background-image', 'url(https://lh4.googleusercontent.com/-N0Ic1VbN2UE/Ui_eJHugZ2I/AAAAAAAAFzg/P9N-QNQisVI/s1280-w1280-c-h720/farm_in_the_prairie.jpg)');
+
     var dashboard = $('#dashboard');
     var devices = [];
     $.getJSON('/api/dashboard/' + dashboard[0].dataset.id + '/devices', function(data, status) {
