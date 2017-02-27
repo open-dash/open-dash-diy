@@ -34,7 +34,11 @@ module.exports.set = function(app) {
     app.get('/dashboards/:id/edit', (request, response) => {
         var sortedDevices = devices.devices.sort(sortByType);
         var dashboard = {};
-        dashboards.dashboards.forEach((dash) => { dashboard = (dash.id == request.params.id) ? dash : null });
+        dashboards.dashboards.forEach((dash) => {
+            if (dash.id == request.params.id) {
+                dashboard = dash;
+            }
+        });
         var sortedDashDevices = dashboard.devices.sort(sortByOrder);
 
         response.render('dashboard-edit', {
