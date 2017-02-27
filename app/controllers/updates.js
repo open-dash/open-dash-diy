@@ -36,7 +36,7 @@ module.exports.set = function(app) {
     var getUpdates = function(callback) {
         var endpoint = "/updates";
         var token = config.settings.token;
-        var url = 'https://graph.api.smartthings.com:443/api/smartapps/installations/7590d7fd-2156-4aa8-a1c2-12202b258e63' + endpoint + '?access_token=' + token;
+        var url = config.settings.apiUrl + endpoint + '?access_token=' + token;
         //console.log("getting updates from " + url);
 
         request({
