@@ -1,0 +1,36 @@
+<div id="{{device.id}}" class="tile" data-role="tile">
+    <div class="tile-content">
+        <div id="details_{{device.id}}">
+                <div class=" place-left" style="text-align: center;width:50px;margin:3px;">
+                    <div class="mif-thermometer mif-2x"></div>
+                    <span class="temperature"></span>°F
+                </div>
+                <div class=" place-left " style="text-align: center;width:50px;margin:3px;">
+                    <div class="mif-battery-two mif-2x"></div>
+                    <span class="battery"></span>%
+                </div>
+                <div class=" place-left " style="text-align: center;width:50px;margin:3px;">
+                    contact: <span class="contact"></span>
+                </div>
+                <div class=" place-left " style="text-align: center;width:50px;margin:3px;">
+                    threeAxis: <span class="threeAxis"></span>
+                </div>
+                <div class=" place-left " style="text-align: center;width:50px;margin:3px;">
+                    acceleration: <span class="acceleration"></span>
+                </div>
+            </div>
+            <div class="tile-label">{{device.name}}</div>
+    </div>
+</div>
+<!-- Required Scripts -->
+<script>
+    var attributes = '{ "attributes" : { {{#each device.attributes}} "{{@key}}" : "{{this}}" , {{/each}}  } }';
+    attributes = attributes.replace(/(.*?),\s*(\}|])/g, "$1$2");
+    var attribs = JSON.parse(attributes);
+    var commands = '{ "commands" : { {{#each device.commands}} "command" : "{{command}}" , {{/each}} } }';
+    commands = commands.replace(/(.*?),\s*(\}|])/g, "$1$2");
+    var cmds = JSON.parse(commands);
+    for (var i in attribs.attributes) {
+        $('#details_{{device.id}}').find("." + i).html(attribs.attributes[i]);
+    }
+</script>

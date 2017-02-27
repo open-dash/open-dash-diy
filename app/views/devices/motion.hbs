@@ -1,0 +1,29 @@
+<div id="{{device.id}}" class="tile text-shadow" data-role="tile">
+    <div class="tile-content">
+        <span class="tile-label">{{device.name}}</span>
+        <div id="details_{{device.id}}" style="margin-top:10px;margin-left:15px">
+            <div class="" style="text-align: center;width:50px;float:left;">
+                <div class="mif-lines mif-2x"></div>Motion: <span class="motion"></span>
+            </div>
+            <div class="" style="text-align: center;left:0; width:50px;float:left;">
+                <div class="mif-thermometer mif-2x"></div><span class="temperature"></span>°F
+            </div>
+            <div class="" style="text-align: center;width:50px;float:left;">
+                <div class="mif-battery-two mif-2x"></div><span class="battery"></span>%
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Required Scripts -->
+<script>
+    var attributes = '{ "attributes" : { {{#each device.attributes}} "{{@key}}" : "{{this}}" , {{/each}}  } }';
+    attributes = attributes.replace(/(.*?),\s*(\}|])/g, "$1$2");
+    var attribs = JSON.parse(attributes);
+    var commands = '{ "commands" : { {{#each device.commands}} "command" : "{{command}}" , {{/each}} } }';
+    commands = commands.replace(/(.*?),\s*(\}|])/g, "$1$2");
+    var cmds = JSON.parse(commands);
+    for (var i in attribs.attributes) {
+        $('#details_{{device.id}}').find("." + i).html(attribs.attributes[i]);
+    }
+</script>

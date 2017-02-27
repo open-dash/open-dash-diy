@@ -1,0 +1,25 @@
+<div style="background-color: #fff;color:#000;margin:0;opacity: .7;padding:15px">
+    <h2>Settings</h2>
+    <div>
+        <h3>Token</h3>
+        <p>Enter this to skip the oauth2 process if you have manually installed the smartapp and already have a token and url</p>
+        <input type="text" name="token" id="token" value="{{settings.token}}" style="width:450px" class="input-control text">
+        <h3>API URL</h3>
+        <p>Enter this to skip the oauth2 process</p>
+        <input type="text" name="apiUrl" id="apiUrl" value="{{settings.apiUrl}}" style="width:450px" class="input-control text">
+        <h3>Client ID</h3>
+        <p>Enter this if planning on using oauth2 install method</p>
+        <input type="text" name="clientId" id="clientId" value="{{settings.clientId}}" style="width:450px" class="input-control text">
+        <h3>Client Secret</h3>
+        <p>Enter this if planning on using oauth2 install method</p>
+        <input type="text" name="clientSecret" id="clientSecret" value="{{settings.clientSecret}}" style="width:450px" class="input-control text"><br/><br/>
+        <input id="saveBtn" class="button primary" type="button" value="Save Settings" />
+        <div id="results"></div>
+        <div>
+            <h3>Oauth2 Process</h3>
+            <button class="button primary"><a class="fg-white" href="/settings/auth">Connect with SmartThings</a></button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/settings.js"></script>

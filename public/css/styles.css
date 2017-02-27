@@ -1,0 +1,43 @@
+.border {
+    border: 1px #000 solid;
+}
+
+.tile-label {
+    font-size: .9em;
+    padding: 0 !important;
+    left: 5 !important;
+    padding-bottom: 5px !important;
+    text-align: left !important;
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 1px rgb(255, 255, 255);
+}
+
+#dashboard {
+    background-image: url(https://lh4.googleusercontent.com/-N0Ic1VbN2UE/Ui_eJHugZ2I/AAAAAAAAFzg/P9N-QNQisVI/s1280-w1280-c-h720/farm_in_the_prairie.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+    height: 100%;
+    min-height: 100%;
+}
+
+.tile {
+    opacity: .8;
+    color: #ccc;
+    background-color: #000;
+}
+
+.tile,
+.tile-small,
+.tile-sqaure,
+.tile-wide,
+.tile-large,
+.tile-big,
+.tile-super {
+    opacity: 0;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+}

@@ -1,0 +1,40 @@
+<div id="{{device.id}}" class="tile text-shadow" data-role="tile">
+    <div class="tile-content">
+        <span class="tile-label">{{device.name}}</span>
+        <div id="details_{{device.id}}">
+            <input type="range" id="#slider_{{device.id}}" min="0" max="100" class="slider" value="15" data-action="setLevel"> 
+            level: <span class="level"></span> switch: <span class="switch"></span>
+        </div>
+        <label class="switched">
+                <input class="checkbox" type="checkbox" checked data-action="switch"/>
+                <span class="check"></span>
+            </label>
+    </div>
+</div>
+
+<!-- Required Scripts -->
+<script>
+    $(document).ready(function () {
+        var attributes = '{ "attributes" : { {{#each device.attributes}} "{{@key}}" : "{{this}}" , {{/each}}  } }';
+        attributes = attributes.replace(/(.*?),\s*(\}|])/g, "$1$2");
+        var attribs = JSON.parse(attributes);
+        //var commands = '{ "commands" : { {{#each device.commands}} "command" : "{{command}}" , {{/each}} } }';
+        //commands = commands.replace(/(.*?),\s*(\}|])/g, "$1$2");
+        //var cmds = JSON.parse(commands);
+        for (var i in attribs.attributes) {
+            $('#details_{{device.id}}').find("." + i).html(attribs.attributes[i]);
+        }
+        $("#details_{{device.id}}").find('input[type=range]').val(attribs.attributes.level);
+        var checked = (attribs.attributes.switch == "off") ? false : true;
+        $("#{{device.id}}").find('input[type=checkbox]').prop("checked", checked) 
+
+        $('#details_{{device.id}} .level').on("change", function (e) {
+            $("#details_{{device.id}}").find('input[type=range]').val(e.target.innerHTML);
+        });
+        $('#details_{{device.id}} .switch').on("change", function (e) {
+            var checked = (e.target.innerHTML == "off") ? false : true;
+            $("#{{device.id}}").find('input[type=checkbox]').prop("checked", checked);
+        });
+    });
+
+</script>

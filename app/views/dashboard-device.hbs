@@ -1,0 +1,51 @@
+<div style="background-color: #fff;color:#000;margin:0;opacity: .85;padding:15px">
+    <h2>Edit {{dashboard.name}} Dashboard Device {{device.name}}</h2>
+    <div id="dashboard">
+        <div class="">
+            <div id="devicelist" style="background-color: #fff;color:#000;margin:15px;padding:15px;">
+                <div>
+                    <h3>Device Info</h3>
+                    <div>
+                        <div>name: <input id="name" value="{{device.name}}"> </div>
+                        <div>label: {{device.label}}</div>
+                        <div>type: {{device.type}}</div>
+                        <div>id: {{device.id}}</div>
+                        <div>date: {{device.date}}</div>
+                        <div>model: {{device.model}}</div>
+                        <div>manufacturer: {{device.manufacturer}}</div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Settings</h3>
+                    <div id="enabledValue" style="display:none;">{{device.enabled}}</div>
+                    <input type="checkbox" name="enabled" id="enabled" class="input-control checkbox" value=""> Enabled
+                    <div>order: <input id="order" id="order" value="{{device.order}}"></div>
+                    <div id="templateValue" style="display:none;">template: {{device.template}}</div>
+                    Template:
+                    <select name="template" id="template" style="height:35px;">
+                <option value="na">Please Select One</option>
+                {{#each templates}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+                    <br/><br/>
+                    <input id="saveDashDevice" class="btn btn-default" type="button" value="Save" data-id="{{device.id}}" data-dashid="{{dashboard.id}}">
+                </div>
+                <div>
+                    <h3>Attributes</h3>
+                    <p>Add ability to get latest values here...</p>
+                    {{#each device.attributes}} {{@key}}: {{this}}<br/> {{/each}}
+                </div>
+                <div>
+                    <h3>Commands</h3>
+                    <p>For future use, enable/disable commands to send</p>
+                    {{#each device.commands}} {{command}}<br/> {{/each}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/dashboard-device-edit.js">
+
+</script>

@@ -1,0 +1,72 @@
+<div style="background-color: #fff;color:#000;margin:0;opacity: .85;padding:15px">
+    <div>
+        <h3>Edit <a href="/dashboards/{{dashboard.id}}">{{dashboard.name}}</a> Dashboard</h3>
+    </div>
+    <div id="dashboard" class="flex-grid">
+        <div class="row">
+            <div id="devicelist" class="cell size4 padding10">
+                <h3>Add Devices to Dashboard</h3>
+                <div id="deviceTable" class="cell">
+                    <table id="tableDevices" class="table striped hovered cell-hovered border bordered table-condensed">
+                        <tr>
+                            <th><input type="checkbox" onClick="toggle(this)" /></th>
+                            <th>Display Name</th>
+                            <th>Type</th>
+                        </tr>
+                        {{#each devices}}
+                        <tr>
+                            <td><input type="checkbox" id="cb_{{id}}" name="deviceCB" class="deviceCheckbox" /></td>
+                            <td>{{name}}</td>
+                            <td>{{type}}</td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </div>
+            </div>
+
+            <div class="cell size2 padding10" style="text-align: center;padding-top:50px;">
+                <div><h5>Dashboard Name</h5></div>
+                <input type="text" name="dashName" id="dashName" class="input-control text" value="{{dashboard.name}}" style="width:300px;">
+                <br/><br/>
+                <input id="saveDashboard" class="button primary" type="button" value="Save Dashboard" data-id="{{dashboard.id}}" style="width:300px;">
+                <br/><br/> 
+                <div><h5>Add Cameras</h5></div>
+                <select name="cameras" id="cameras" class="input-control select"  style="width:300px;">
+                    <option value="na">Please Select One</option>
+                    {{#each cameras}}
+                    <option value="{{id}}">{{name}}</option>
+                    {{/each}}
+                </select>
+                <input id="addCamera" class="button primary" type="button" value="Add Selected Camera" data-id="{{dashboard.id}}" style="width:300px;">
+                <br/><br/>
+                <div><h5>Add/Remove Checked Items</h5></div>
+                <input id="addDashboardDevices" class="button primary" type="button" value="Add Devices ->" data-id="{{dashboard.id}}" style="width:300px;">
+                <br/>
+                <input id="removeDashboardDevices" class="button primary" type="button" value="<- Remove Devices" data-id="{{dashboard.id}}" style="width:300px;"><br/><br/>
+                <div id="results"></div>
+            </div>
+
+            <div class="cell size4 padding10">
+                <h3>Existing Dashboard Devices</h3>
+                <table id="tableDashboardDevices"  class="table striped hovered cell-hovered border bordered table-condensed">
+                    <tr>
+                        <th><input type="checkbox" onClick="toggleDashboard(this)" /></th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Edit</th>
+                    </tr>
+                    {{#each dashDevices}}
+                    <tr>
+                        <td><input type="checkbox" id="cb_{{id}}" name="dashboardCB" class="dashboardCheckbox" /></td>
+                        <td>{{name}}</td>
+                        <td>{{type}}</td>
+                        <td><a class="edit" href="/dashboards/{{../dashboard.id}}/device/{{id}}" data-id="{{id}}" data-dash="{{../dashboard.id}}">edit</a></td>
+                    </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/dashboard-edit.js"></script>

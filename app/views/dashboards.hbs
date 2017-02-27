@@ -1,0 +1,21 @@
+<div style="background-color: #fff;color:#000;margin:0;opacity: .7;padding:15px">
+    <h2>Dashboards TBD</h2>
+    <div id="dashboards">
+        <div>
+            <h3>Add New Dashboard</h3>
+            <p>Name of Dashboard</p>
+            <input type="text" id="newDashName"><br/>
+            <input type="button" id="addDash" value="Add" class="btn btn-default" />
+            <div id="results"></div>
+        </div>
+        <div id="dashList">
+            <h3>Existing Dashboards</h3>
+            <ul>
+                {{#each dashboards}}
+                <li><a href="/dashboards/{{id}}">{{name}}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/dashboards.js"></script>

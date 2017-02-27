@@ -14,9 +14,6 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
-# nyc test coverage
-.nyc_output
-
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
@@ -29,9 +26,30 @@ build/Release
 # Dependency directories
 node_modules
 jspm_packages
+data/*
 
 # Optional npm cache directory
 .npm
 
 # Optional REPL history
 .node_repl_history
+
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.sublime-project
+*.sublime-workspace
+.idea
+.DS_Store
+
+node_modules
+private/certs
+
+docker-compose.*.yml
+settings.*.json
+
+data

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Open-Dash</title>
+
+  {{!--
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--}}
+  <link href="/css/metro.css" rel="stylesheet">
+  <link href="/css/metro-icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
+
+  {{!--
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--}}
+  <script src="/js/metro.min.js"></script>
+  <script src="/js/weather.js"></script>
+  <script src="/js/dateTime.js"></script>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="charm right-side primary" id="right-charm" data-role="charm" data-position="right">
+      <br/><br/>Menu<br/><br/>
+      <button class="button " style="width:100px;"><a href="/">Main Menu</a></button><br/>
+      <button class="button " style="width:100px;"><a href="/devices">Devices</a></button><br/>
+      <button class="button " style="width:100px;"><a href="/cameras">Cameras</a></button><br/>
+      <button class="button " style="width:100px;"><a href="/dashboards">Dashboards</a></button><br/>
+      <button class="button " style="width:100px;"><a href="/settings">Settings</a></button><br/>
+    </div>
+    <div>
+      <header class="no-margin " style="background-color: #000;color:#ccc;">
+        <div class="clear-float">
+          <a class="place-left" href="/" title="" style="color:#ccc;margin-left:5px;">
+            <h3>Open-Dash {{version}}</h3>
+          </a>
+          <div class="place-right" style="margin-top:5px;margin-right:5px;">
+            <button class="button mif-menu mif-2x fg-white" onclick="toggleMetroCharm('#right-charm')" style="background-color: #000;border:none;"></button>
+          </div>
+          <div id="weather" class="place-right presenter" data-role="presenter" data-height="50" data-width="200" data-duration="5000"
+            style="margin-right:5px;min-height: 50px;border:0px inset #ccc">
+            <div class="scene">
+              <div class="act">
+                <element id="weather1" class="actor" data-position="0,20"></element>
+                <element id="weather2" class="actor" data-position="15,20"></element>
+                <element id="weather3" class="actor" data-position="30,20"> </element>
+              </div>
+            </div>
+        </div>
+        <div id="dateTime" class="place-right" data-role="" data-height="50" data-width="150" data-duration="5000" style="margin-right:5px;min-height: 50px;margin-right:25px;width:150px;">
+        </div>
+      </div>
+    </header>
+    <div id="main" class="main-content clear-float">
+      {{{body}}}
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
