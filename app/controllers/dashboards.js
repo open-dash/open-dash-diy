@@ -65,7 +65,7 @@ module.exports.set = function(app) {
         var files = fs.readdirSync(__dirname + "/../views/devices/");
         var templates = [];
         files.forEach(file => {
-            templates.push(file.toString().replace(".hbs", ""));
+            templates.push(file.toString().replace(".hbs", "").toLowerCase());
         });
 
         //console.log(sortedDevices);

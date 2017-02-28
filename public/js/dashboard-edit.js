@@ -1,5 +1,22 @@
 var devices = [];
 $(function() {
+    $("#addBlankTile").on('click', function(e) {
+        var id = this.dataset.id;
+        var emptyDevice = {};
+        emptyDevice.type = "blank";
+        $.ajax({
+            type: 'POST',
+            url: '/api/dashboard/' + id + '/add',
+            dataType: 'json',
+            data: JSON.stringify(emptyDevice),
+            contentType: 'application/json',
+            complete: function(data) {
+                // do something
+                $('#results').text("Successfully Saved");
+                location.reload();
+            }
+        });
+    });
 
     $("#saveDashboard").on('click', function(e) {
         var id = this.dataset.id;

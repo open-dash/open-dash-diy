@@ -1,6 +1,7 @@
 const express = require('express');
 const request = require('request');
 const bodyParser = require('body-parser');
+var uuid = require('node-uuid');
 const fs = require('fs');
 const app = express();
 var SelfReloadJSON = require('self-reload-json');
@@ -146,39 +147,50 @@ var updateDashboard = function(cmd, id, data, callback) {
     switch (cmd) {
         case "add":
             var dashIds = dashboard.devices.map(e => e.id);
-            for (var x in data) {
-                var match = false;
-                for (var d in dashIds) {
-                    if (dashIds[d] == data[x]) { match = true }
-                }
-                if (match) {
-                    //console.log('already exists');
-                } else {
-                    var device = {};
-                    var files = fs.readdirSync(__dirname + "/../views/devices/");
-                    //console.log(files);
-                    var templates = [];
-                    files.forEach(file => {
-                        //console.log(file);
-                        templates.push(file.toString().replace(".hbs", ""));
-                    });
-                    for (i = 0; devices.devices.length > i; i++) {
-                        if (devices.devices[i].id == data[x]) {
-                            var dashDevice = devices.devices[i];
-                            if (templates.indexOf(dashDevice.type) >= 0) {
-                                dashDevice.template = dashDevice.type
-                            } else {
-                                for (var f in templates) {
-                                    var xx = templates[f];
-                                    if (dashDevice.type.toLowerCase().includes(templates[f].toLowerCase())) {
-                                        dashDevice.template = templates[f];
+            if (data.type == "blank") {
+                var dashDevice = {};
+                dashDevice.name = "Blank Tile";
+                dashDevice.type = "Blank"
+                dashDevice.id = "Blank_" + uuid.v1();
+                dashDevice.template = "Blank";
+                dashDevice.enabled = true
+                dashDevice.order = "1"
+                dashboard.devices.push(dashDevice)
+            } else {
+                for (var x in data) {
+                    var match = false;
+                    for (var d in dashIds) {
+                        if (dashIds[d] == data[x]) { match = true }
+                    }
+                    if (match) {
+                        //console.log('already exists');
+                    } else {
+                        var device = {};
+                        var files = fs.readdirSync(__dirname + "/../views/devices/");
+                        //console.log(files);
+                        var templates = [];
+                        files.forEach(file => {
+                            //console.log(file);
+                            templates.push(file.toString().replace(".hbs", "").toLowerCase());
+                        });
+                        for (i = 0; devices.devices.length > i; i++) {
+                            if (devices.devices[i].id == data[x]) {
+                                var dashDevice = devices.devices[i];
+                                if (templates.indexOf(dashDevice.type) >= 0) {
+                                    dashDevice.template = dashDevice.type
+                                } else {
+                                    for (var f in templates) {
+                                        var xx = templates[f];
+                                        if (dashDevice.type.toLowerCase().includes(templates[f].toLowerCase())) {
+                                            dashDevice.template = templates[f];
+                                        }
                                     }
+                                    if (dashDevice.template == null) { dashDevice.template = "default" }
                                 }
-                                if (dashDevice.template == null) { dashDevice.template = "default" }
+                                dashDevice.enabled = true
+                                dashDevice.order = "99"
+                                dashboard.devices.push(dashDevice)
                             }
-                            dashDevice.enabled = true
-                            dashDevice.order = "99"
-                            dashboard.devices.push(dashDevice)
                         }
                     }
                 }

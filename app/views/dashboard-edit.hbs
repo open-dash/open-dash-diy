@@ -25,13 +25,17 @@
             </div>
 
             <div class="cell size2 padding10" style="text-align: center;padding-top:50px;">
-                <div><h5>Dashboard Name</h5></div>
+                <div>
+                    <h5>Dashboard Name</h5>
+                </div>
                 <input type="text" name="dashName" id="dashName" class="input-control text" value="{{dashboard.name}}" style="width:300px;">
                 <br/><br/>
                 <input id="saveDashboard" class="button primary" type="button" value="Save Dashboard" data-id="{{dashboard.id}}" style="width:300px;">
-                <br/><br/> 
-                <div><h5>Add Cameras</h5></div>
-                <select name="cameras" id="cameras" class="input-control select"  style="width:300px;">
+                <br/><br/>
+                <div>
+                    <h5>Add Cameras</h5>
+                </div>
+                <select name="cameras" id="cameras" class="input-control select" style="width:300px;">
                     <option value="na">Please Select One</option>
                     {{#each cameras}}
                     <option value="{{id}}">{{name}}</option>
@@ -39,20 +43,26 @@
                 </select>
                 <input id="addCamera" class="button primary" type="button" value="Add Selected Camera" data-id="{{dashboard.id}}" style="width:300px;">
                 <br/><br/>
-                <div><h5>Add/Remove Checked Items</h5></div>
+                <div>
+                    <h5>Add/Remove Checked Items</h5>
+                </div>
                 <input id="addDashboardDevices" class="button primary" type="button" value="Add Devices ->" data-id="{{dashboard.id}}" style="width:300px;">
                 <br/>
-                <input id="removeDashboardDevices" class="button primary" type="button" value="<- Remove Devices" data-id="{{dashboard.id}}" style="width:300px;"><br/><br/>
-                <div id="results"></div>
+                <input id="removeDashboardDevices" class="button primary" type="button" value="<- Remove Devices" data-id="{{dashboard.id}}" style="width:300px;">
+                <br/><br/>
+                <input id="addBlankTile" class="button primary" type="button" value="Add Blank Tile"" data-id="{{dashboard.id}}" style="width:300px;">
+                <br/><br/>
+                    <div id="results"></div>
             </div>
 
             <div class="cell size4 padding10">
                 <h3>Existing Dashboard Devices</h3>
-                <table id="tableDashboardDevices"  class="table striped hovered cell-hovered border bordered table-condensed">
+                <table id="tableDashboardDevices" class="table striped hovered cell-hovered border bordered table-condensed">
                     <tr>
                         <th><input type="checkbox" onClick="toggleDashboard(this)" /></th>
                         <th>Name</th>
                         <th>Type</th>
+                        <th>Template</th>
                         <th>Edit</th>
                     </tr>
                     {{#each dashDevices}}
@@ -60,6 +70,7 @@
                         <td><input type="checkbox" id="cb_{{id}}" name="dashboardCB" class="dashboardCheckbox" /></td>
                         <td>{{name}}</td>
                         <td>{{type}}</td>
+                        <td>{{template}}</td>
                         <td><a class="edit" href="/dashboards/{{../dashboard.id}}/device/{{id}}" data-id="{{id}}" data-dash="{{../dashboard.id}}">edit</a></td>
                     </tr>
                     {{/each}}

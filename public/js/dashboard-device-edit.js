@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var x = $('#templateValue').text().replace("template: ", "");
+    var x = $('#templateValue').text().replace("template: ", "").toLowerCase();
     //console.log(x);
     $('#template').val(x);
     if ($('#enabledValue').text() == "true") {
