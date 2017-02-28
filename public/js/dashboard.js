@@ -1,6 +1,5 @@
 $(document).ready(function() {
     //alert(value.id);
-    $('#dashboard').css('background-image', 'url(https://lh4.googleusercontent.com/-N0Ic1VbN2UE/Ui_eJHugZ2I/AAAAAAAAFzg/P9N-QNQisVI/s1280-w1280-c-h720/farm_in_the_prairie.jpg)');
 
     var dashboard = $('#dashboard');
     var devices = [];
@@ -15,7 +14,8 @@ $(document).ready(function() {
 
             return sortStatus;
         });
-
+        dashboard.html("");
+        $('#dashboard').css('background-image', 'url(https://lh4.googleusercontent.com/-N0Ic1VbN2UE/Ui_eJHugZ2I/AAAAAAAAFzg/P9N-QNQisVI/s1280-w1280-c-h720/farm_in_the_prairie.jpg)');
         devices.forEach(dev => {
             $.get('/device/' + dashboard[0].dataset.id + '/' + dev.id, function(data, status) {
                 if (status == "success") {
@@ -34,12 +34,19 @@ $(document.body).on('click', '.tile', function(e) {
     console.log("target is: " + e.target.className);
     var action = $(this).find('.' + e.target.className);
     var actioncmd = action[0].dataset.action;
+    var actiontoggle = action[0].dataset.command;
     var actionval = action.val();
 
     switch (actioncmd) {
         case "switch": //switch is clicked
             var currentVal = $(action).prop("checked");
-            var cmd = (currentVal) ? "on" : "off";
+            var cmd = "toggle";
+            if (currentVal == "off") {
+                cmd = "on";
+            }
+            if (currentVal == "on") {
+                cmd = "off";
+            }
             console.log("cmd to send : " + cmd);
             $.getJSON('/api/devices/' + id + "/" + cmd, function(data, status) {});
             break;

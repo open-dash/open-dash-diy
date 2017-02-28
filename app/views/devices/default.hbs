@@ -1,12 +1,10 @@
 <div id="{{device.id}}" class="tile text-shadow" data-role="tile">
-    <div class="tile-content">
+    <div class="tile-content" data-action="switch" data-command="toggle">
         <span class="tile-label">{{device.name}}</span>
         <span id="details_{{device.id}}">
         </span>
     </div>
 </div>
-
-
 
 <!-- Required Scripts -->
 <script>
@@ -17,7 +15,7 @@
     commands = commands.replace(/(.*?),\s*(\}|])/g, "$1$2");
     var cmds = JSON.parse(commands);
     for (var i in attribs.attributes) {
-        $('#details_{{device.id}}').append(i + ": <span class=''"+ i +"'>"+ attribs.attributes[i] +"</span> ");
+        $('#details_{{device.id}}').append(i + ": <span class='"+ i +"'>"+ attribs.attributes[i] +"</span> ");
     }
 
 </script>

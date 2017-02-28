@@ -13,7 +13,7 @@ module.exports.set = function(app) {
         response.setHeader('Content-Type', 'application/json');
         getWeather(function(err, result) {
             if (err) {
-                response.send(500, { error: 'something went wrong' });
+                response.status(500).send({ error: 'something went wrong' });
             } else {
                 response.send(result);
             }

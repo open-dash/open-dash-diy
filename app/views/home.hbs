@@ -22,13 +22,11 @@
         </div>
         <div id="dashList" class="cell size4 padding20">
             <h3>Existing Dashboards</h3>
-            {{#if dashboards}}
             <ul class="simple-list large-bullet">
                 {{#each dashboards}}
                 <li><a href="/dashboards/{{id}}">{{name}}</a></li>
                 {{/each}}
             </ul>
-            {{/if}}
         </div>
         <div class="cell size4 padding20">
             <h3>Settings</h3>

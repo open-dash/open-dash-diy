@@ -8,9 +8,16 @@ const dashboards = require('../../data/dashboards.json');
 var devices = new SelfReloadJSON(appRoot + '/data/devices.json');
 var updates = new SelfReloadJSON(appRoot + '/data/updates.json');
 
+var doUpdates = false;
+
 module.exports.set = function(app) {
     app.get('/updates', function(req, res) {
         res.setHeader('Content-Type', 'application/json');
+        if (config.settings.token != "") {
+            doUpdates = true;
+        } else {
+            doUpdates = false
+        }
         getUpdates(function(err, result) {
             if (err) {
                 response.send(500, { error: 'something went wrong' });
@@ -23,14 +30,16 @@ module.exports.set = function(app) {
     });
 
     setInterval(function() {
-        getUpdates(function(err, result) {
-            if (err) {
-                console.log('something went wrong');
-            } else {
-                updates.updates = result;
-                updates.save();
-            }
-        });
+        if (doUpdates) {
+            getUpdates(function(err, result) {
+                if (err) {
+                    console.log('something went wrong');
+                } else {
+                    updates.updates = result;
+                    updates.save();
+                }
+            });
+        }
     }, 5000);
 
     var getUpdates = function(callback) {
