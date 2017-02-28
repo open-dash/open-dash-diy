@@ -15,7 +15,7 @@ module.exports.set = function(app) {
             var template = "devices/default";
 
             if (result.template) {
-                template = "devices/" + result.template;
+                template = "devices/" + result.template.toLowerCase();
             }
             response.render(template, {
                 layout: false,
