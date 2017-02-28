@@ -8,6 +8,7 @@ var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 const dashboards = require('../../data/dashboards.json');
 var devices = new SelfReloadJSON(appRoot + '/data/devices.json');
 const simpleOauthModule = require('simple-oauth2');
+var ip = require('ip');
 var oauth2;
 var accessURL;
 var authorizationUri;
@@ -40,9 +41,11 @@ module.exports.set = function(app) {
         } catch (err) {
             console.log("no client or secret set");
         }
+        var redirectUrl = "http://" + ip.address() + ":3000/settings/callback";
+
         oauth2.authorizationCode.getToken({
             code: code,
-            redirect_uri: 'http://localhost:3000/settings/callback'
+            redirect_uri: redirectUrl
         }, saveToken);
 
         function saveToken(error, result) {
@@ -105,9 +108,9 @@ module.exports.set = function(app) {
                 authorizePath: '/oauth/authorize',
             },
         });
-
+        var redirectUrl = "http://" + ip.address() + ":3000/settings/callback";
         authorizationUri = oauth2.authorizationCode.authorizeURL({
-            redirect_uri: 'http://localhost:3000/settings/callback',
+            redirect_uri: redirectUrl,
             scope: 'app',
             state: '3(#0/!~'
         });
