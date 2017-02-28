@@ -41,18 +41,22 @@ $(document.body).on('click', '.tile', function(e) {
         case "switch": //switch is clicked
             var currentVal = $(action).prop("checked");
             var cmd = "toggle";
-            if (currentVal == "off") {
+            if (currentVal) {
                 cmd = "on";
             }
-            if (currentVal == "on") {
+            if (!currentVal) {
                 cmd = "off";
             }
             console.log("cmd to send : " + cmd);
-            $.getJSON('/api/devices/' + id + "/" + cmd, function(data, status) {});
+            $.getJSON('/api/devices/' + id + "/" + cmd, function(data, status) {
+                var x = status;
+            });
             break;
         case "setLevel": //setLevel cmd is changed
             console.log("setLevel to : " + actionval);
-            $.getJSON('/api/devices/' + id + "/" + actioncmd + "/" + actionval, function(data, status) {});
+            $.getJSON('/api/devices/' + id + "/" + actioncmd + "/" + actionval, function(data, status) {
+                var x = status;
+            });
             break;
             //TODO: Insert other commands here, remember to set data-action="cmd name" in the object that holds the value and triggers the command.
         default:
