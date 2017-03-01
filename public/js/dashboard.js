@@ -75,7 +75,7 @@ $(document.body).on('click', '.tile', function(e) {
 });
 
 var showTiles = function() {
-    var tiles = $(".tile, .tile-small, .tile-sqaure, .tile-wide, .tile-large, .tile-big, .tile-super");
+    var tiles = $(".tile, .tile-small, .tile-square, .tile-wide, .tile-large, .tile-big, .tile-super");
 
     $.each(tiles, function() {
         var tile = $(this);

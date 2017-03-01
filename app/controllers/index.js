@@ -5,6 +5,7 @@ var dashboards = require('./dashboards');
 var settings = require('./settings');
 var updates = require('./updates');
 var cameras = require('./cameras');
+var templates = require('./templates');
 
 module.exports.set = function(app) {
     home.set(app);
@@ -14,4 +15,5 @@ module.exports.set = function(app) {
     settings.set(app);
     updates.set(app);
     cameras.set(app);
+    templates.set(app);
 }

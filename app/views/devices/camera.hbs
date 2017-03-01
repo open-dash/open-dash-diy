@@ -5,12 +5,12 @@
             <div class='image-container image-format-hd rounded'><img id="picture_{{device_id}}" class='picture' src="{{device.path}}" width='310' /></div>
         </span>
     </div>
-    </div>
-    <script>
-        setInterval(function () {
-            $("#picture_{{device_id}}").each(function () {
-                var time = (new Date()).getTime(); $(this).attr("src", $(this).attr("src").split('?')[0]
-                    + "?t=" + time); 
-            })
-        }, 2000);
-    </script>
+</div>
+<script>
+    setInterval(function () {
+        $("#picture_{{device_id}}").each(function () {
+            var time = (new Date()).getTime(); $(this).attr("src", $(this).attr("src").split('?')[0]
+                + "?t=" + time);
+        })
+    }, 2000);
+</script>

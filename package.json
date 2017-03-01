@@ -1,29 +1,30 @@
 {
-    "name": "open-dash-nodejs",
-    "version": "1.0.0",
-    "description": "Open-Dash IoT Dashboard",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node index.js"
-    },
-    "author": "pstuart",
-    "license": "",
-    "dependencies": {
-        "app-root-path": "^2.0.1",
-        "async": "^2.1.4",
-        "body-parser": "^1.16.1",
-        "connect": "^3.5.1",
-        "express": "^4.14.1",
-        "express-handlebars": "^3.0.0",
-        "handlebars-helpers": "^0.8.0",
-        "ip": "^1.1.4",
-        "request": "^2.79.0",
-        "self-reload-json": "^0.2.0",
-        "simple-oauth2": "^1.0.3",
-        "uuid": "^3.0.1"
-    },
-    "devDependencies": {
-        "jshint": "^2.9.4"
-    }
+  "name": "open-dash-nodejs",
+  "version": "1.0.0",
+  "description": "Open-Dash IoT Dashboard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "pstuart",
+  "license": "",
+  "dependencies": {
+    "app-root-path": "^2.0.1",
+    "async": "^2.1.4",
+    "body-parser": "^1.16.1",
+    "connect": "^3.5.1",
+    "express": "^4.14.1",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.6",
+    "handlebars-helpers": "^0.8.0",
+    "ip": "^1.1.4",
+    "request": "^2.79.0",
+    "self-reload-json": "^0.2.0",
+    "simple-oauth2": "^1.0.3",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.4"
+  }
 }
