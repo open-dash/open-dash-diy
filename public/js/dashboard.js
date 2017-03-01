@@ -1,8 +1,10 @@
+var tiles = [];
+var devices = [];
+
 $(document).ready(function() {
     //alert(value.id);
 
     var dashboard = $('#dashboard');
-    var devices = [];
     $.getJSON('/api/dashboard/' + dashboard[0].dataset.id + '/devices', function(data, status) {
         devices = data.sort(function(a, b) {
             var sortStatus = 0;
@@ -16,11 +18,13 @@ $(document).ready(function() {
         });
         dashboard.html("");
         $('#dashboard').css('background-image', 'url(https://lh4.googleusercontent.com/-N0Ic1VbN2UE/Ui_eJHugZ2I/AAAAAAAAFzg/P9N-QNQisVI/s1280-w1280-c-h720/farm_in_the_prairie.jpg)');
+        var i = 1;
         devices.forEach(dev => {
             $.get('/device/' + dashboard[0].dataset.id + '/' + dev.id, function(data, status) {
                 if (status == "success") {
-                    $(dashboard).append(data);
-                    showTiles();
+                    tiles.push({ "order": dev.order, "html": data });
+                    finallyShowTiles(i);
+                    i++;
                 }
             });
         });
@@ -81,3 +85,17 @@ var showTiles = function() {
         }, Math.floor(Math.random() * 500));
     });
 };
+
+function sortByOrder(x, y) {
+    return ((x.order == y.order) ? 0 : ((x.order > y.order) ? 1 : -1));
+}
+
+var finallyShowTiles = function(index) {
+    if (index >= devices.length) {
+        var sortedTiles = tiles.sort(sortByOrder);
+        sortedTiles.forEach(tile => {
+            $(dashboard).append(tile.html);
+        });
+        showTiles();
+    }
+}
