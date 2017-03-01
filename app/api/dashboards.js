@@ -7,6 +7,7 @@ const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 var dashboards = new SelfReloadJSON(appRoot + '/data/dashboards.json');
+var smartthings = new SelfReloadJSON(appRoot + '/data/smartthings.json');
 var cameras = new SelfReloadJSON(appRoot + '/data/cameras.json');
 var updates = new SelfReloadJSON(appRoot + '/data/updates.json');
 
@@ -172,9 +173,9 @@ var updateDashboard = function(cmd, id, data, callback) {
                             //console.log(file);
                             templates.push(file.toString().replace(".hbs", "").toLowerCase());
                         });
-                        for (i = 0; devices.devices.length > i; i++) {
-                            if (devices.devices[i].id == data[x]) {
-                                var dashDevice = devices.devices[i];
+                        for (i = 0; smartthings.devices.length > i; i++) {
+                            if (smartthings.devices[i].id == data[x]) {
+                                var dashDevice = smartthings.devices[i];
                                 if (templates.indexOf(dashDevice.type) >= 0) {
                                     dashDevice.template = dashDevice.type
                                 } else {

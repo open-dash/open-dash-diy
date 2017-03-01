@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const appRoot = require('app-root-path');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 var dashboards = new SelfReloadJSON(appRoot + '/data/dashboards.json');
+var smartthings = new SelfReloadJSON(appRoot + '/data/smartthings.json');
 var cameras = new SelfReloadJSON(appRoot + '/data/cameras.json');
 
 module.exports.set = function(app) {
@@ -31,7 +32,7 @@ module.exports.set = function(app) {
     });
 
     app.get('/dashboards/:id/edit', (request, response) => {
-        var sortedDevices = devices.devices.sort(sortByType);
+        var sortedDevices = smartthings.devices.sort(sortByType);
         var dashboard = {};
         dashboards.dashboards.forEach((dash) => {
             if (dash.id == request.params.id) {
