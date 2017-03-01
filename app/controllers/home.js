@@ -3,7 +3,7 @@ const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
-const dashboards = require('../../data/dashboards.json');
+var dashboards = new SelfReloadJSON(appRoot + '/data/dashboards.json');
 
 module.exports.set = function(app) {
 
