@@ -40,3 +40,8 @@
     -webkit-transform: scale(.5);
     transform: scale(.5);
 }
+
+.tabcontrol>.frames .frame {
+    background-color: inherit !important;
+    border: 1px solid #1ba1e2;
+}

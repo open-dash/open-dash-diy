@@ -1,11 +1,11 @@
-var devices = require('./devices');
+var smartthings = require('./smartthings');
 var dashboards = require('./dashboards');
 var weather = require('./weather');
 var settingsAPI = require('./settings');
 var cameras = require('./cameras');
 
 module.exports.set = function(app) {
-    devices.set(app);
+    smartthings.set(app);
     dashboards.set(app);
     weather.set(app);
     settingsAPI.set(app);

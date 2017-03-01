@@ -1,9 +1,8 @@
 console.log("Installing config files for a blank install")
 var fs = require('fs');
-
-var settings = { "settings": { "version": "0.4", "token": "", "apiUrl": "", "clientId": "", "clientSecret": "" } };
+var settings = { "settings": { "version": "0.5", "token": "", "apiUrl": "", "clientId": "", "clientSecret": "" } };
 var updates = { "updates": "" };
-var devices = { "devices": "" };
+var smartthings = { "devices": "" };
 var dashboards = { "dashboards": [] };
 var cameras = { "cameras": [] };
 
@@ -29,9 +28,9 @@ if (!fs.existsSync('data/updates.json')) {
     });
 };
 
-if (!fs.existsSync('data/devices.json')) {
+if (!fs.existsSync('data/smartthings.json')) {
     //create settings.json
-    fs.writeFile('data/devices.json', JSON.stringify(devices), function(err) {
+    fs.writeFile('data/smartthings.json', JSON.stringify(devices), function(err) {
         if (err) {
             return console.log(err);
         }

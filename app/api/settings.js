@@ -23,11 +23,6 @@ module.exports.set = function(app) {
 };
 
 var saveSettings = function(data, callback) {
-    // var update = settings.settings;
-    // update.token = data.token;
-    // update.apiUrl = data.apiUrl;
-    // update.clientId = data.clientId;
-    // update.clientSecret = data.clientSecret;
     data.version = config.settings.version;
     config.settings = data;
     config.save();

@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const appRoot = require('app-root-path');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 var dashboards = new SelfReloadJSON(appRoot + '/data/dashboards.json');
-var devices = new SelfReloadJSON(appRoot + '/data/devices.json');
 var cameras = new SelfReloadJSON(appRoot + '/data/cameras.json');
 
 module.exports.set = function(app) {

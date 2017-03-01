@@ -4,8 +4,6 @@ const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
-const dashboards = require('../../data/dashboards.json');
-var devices = new SelfReloadJSON(appRoot + '/data/devices.json');
 var updates = new SelfReloadJSON(appRoot + '/data/updates.json');
 
 var doUpdates = false;

@@ -57,13 +57,13 @@ $(document.body).on('click', '.tile', function(e) {
                 cmd = "off";
             }
             console.log("cmd to send : " + cmd);
-            $.getJSON('/api/devices/' + id + "/" + cmd, function(data, status) {
+            $.getJSON('/api/smartthings/devices/' + id + "/" + cmd, function(data, status) {
                 var x = status;
             });
             break;
         case "setLevel": //setLevel cmd is changed
             console.log("setLevel to : " + actionval);
-            $.getJSON('/api/devices/' + id + "/" + actioncmd + "/" + actionval, function(data, status) {
+            $.getJSON('/api/smartthings/devices/' + id + "/" + actioncmd + "/" + actionval, function(data, status) {
                 var x = status;
             });
             break;

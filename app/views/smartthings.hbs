@@ -1,0 +1,112 @@
+<div id="smartthings" style="background-color: #fff;color:#000;margin:0;opacity: .7;padding:15px">
+    <div>
+        <h3>SmartThings</h3>
+    </div>
+    <div class="tabcontrol" data-role="tabcontrol">
+        <ul class="tabs">
+            <li><a href="#devices">Devices</a></li>
+            <li><a href="#routines">Routines</a></li>
+            <li><a href="#locations">Locations</a></li>
+            <li><a href="#modes">Modes</a></li>
+        </ul>
+
+        <div class="frames">
+            <div class="frame" id="devices">
+                <p>
+                    <input id="getDevices" class="button primary" type="button" value="Get Devices from SmartThings" />
+                    <input id="saveDevices" style="display:none" class="button primary" type="button" value="Save Devices" />
+                    <p id="results"></p>
+                </p>
+
+                <div id="devicelist">
+                    <button style="display:none" id="loading" class="button loading-cube lighten danger">Loading...</button>
+                    <div id="deviceTable">
+                        <table id="tableDevices" class='table table-bordered table-condensed' style="opacity: 1;">
+                            <tr>
+                                <th>Id</th>
+                                <th>Display Name</th>
+                                <th>Type</th>
+                                <th>Commands</th>
+                                <th>Last Updated</th>
+                            </tr>
+                            {{#each devices}}
+                            <tr>
+                                <td>{{id}}</td>
+                                <td>{{name}}</td>
+                                <td>{{type}}</td>
+                                <td>{{#each commands}} {{command}}, {{/each}}
+                                </td>
+                                <td>{{date}}</td>
+                            </tr>
+                            {{/each}}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="frame" id="routines">
+                <p>
+                    <input id="getRoutines" class="button primary" type="button" value="Get Routines from SmartThings" />
+                    <input id="saveRoutines" style="display:none" class="button primary" type="button" value="Save Routines" />
+                    <p id="results_routines"></p>
+                </p>
+                <div id="routinelist">
+                    <button style="display:none" id="loadingRoutines" class="button loading-cube lighten danger">Loading...</button>
+                    <div id="routineTable">
+                        <table id="tableRoutines" class='table table-bordered table-condensed' style="opacity: 1;width=400px">
+                            <tr>
+                                <th>Label / Name</th>
+                                <th>Id</th>
+                            </tr>
+                            {{#each routines}}
+                            <tr>
+                                <td>{{label}}</td>
+                                <td>{{id}}</td>
+                            </tr>
+                            {{/each}}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="frame" id="locations">
+                <p>
+                    <input id="getLocations" class="button primary" type="button" value="Get Locations from SmartThings" />
+                    <input id="saveLocations" style="display:none" class="button primary" type="button" value="Save Locations" />
+                    <p id="results_locations"></p>
+                    <button style="display:none" id="loadingLocations" class="button loading-cube lighten danger">Loading...</button>
+                </p>
+                <div id="locationslist">
+                    <button style="display:none" id="loadingLocations" class="button loading-cube lighten danger">Loading...</button>
+                    <div id="locationsArea">
+                        Name: {{locations.name}}<br/>
+                        zip: {{locations.zipCode}}<br/>
+                        long: {{locations.longitude}}<br/>
+                        lat: {{locations.latitude}}<br/>
+                        Temp Scale: {{locations.temperatureScale}}<br/>
+                        Timezone: {{locations.timeZone}}<br/>
+                        Contact Book Enabled: {{locations.contactBookEnabled}}<br/>
+                        Current Mode: {{locations.currentMode}}<br/>
+                        hubs: {{locations.hubs}}<br/>
+                    </div>
+                </div>
+            </div>
+            <div class="frame" id="modes">
+                <p>
+                    <input id="getModes" class="button primary" type="button" value="Get Modes from SmartThings" />
+                    <input id="saveModes" style="display:none" class="button primary" type="button" value="Save Modes" />
+                    <p id="results_modes"></p>
+                    <button style="display:none" id="loadingModes" class="button loading-cube lighten danger">Loading...</button>
+                </p>
+                <div id="modesslist">
+                    <button style="display:none" id="loadingModes" class="button loading-cube lighten danger">Loading...</button>
+                    <div id="modesArea">
+                        {{#each modes}}
+                        {{id}} : {{name}}<br/>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/js/smartthings.js"></script>

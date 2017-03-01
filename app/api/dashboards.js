@@ -7,7 +7,6 @@ const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 var dashboards = new SelfReloadJSON(appRoot + '/data/dashboards.json');
-var devices = new SelfReloadJSON(appRoot + '/data/devices.json');
 var cameras = new SelfReloadJSON(appRoot + '/data/cameras.json');
 var updates = new SelfReloadJSON(appRoot + '/data/updates.json');
 

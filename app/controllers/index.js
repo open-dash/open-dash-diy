@@ -1,5 +1,5 @@
 var home = require('./home');
-var devices = require('./devices');
+var smartthings = require('./smartthings');
 var device = require('./device');
 var dashboards = require('./dashboards');
 var settings = require('./settings');
@@ -8,7 +8,7 @@ var cameras = require('./cameras');
 
 module.exports.set = function(app) {
     home.set(app);
-    devices.set(app);
+    smartthings.set(app);
     device.set(app);
     dashboards.set(app);
     settings.set(app);
