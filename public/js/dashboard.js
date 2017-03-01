@@ -29,6 +29,11 @@ $(document).ready(function() {
             });
         });
     });
+
+    //Add Right Menu options specific to dashboard view
+    var dashMenu = $('<br/>Dashboard Options<br/><button class="button " style="width:100px;"><a href="#" onClick="showEdit();">Show Edit</a></button><br/><button class="button " style="width:100px;"><a href="#" onClick="hideEdit();">Hide Edit</a></button><br/>');
+    $('#wrapper').find('.charm').append(dashMenu);
+
 });
 
 
@@ -98,4 +103,22 @@ var finallyShowTiles = function(index) {
         });
         showTiles();
     }
+}
+
+function showEdit() {
+    //alert('do something');
+    var dashboard = $('#dashboard');
+    var tiles = $('#dashboard').find('.tile');
+    for (var tile in tiles) {
+        if (tile < tiles.length) {
+            var badge = $('<span class="tile-badge bg-darkGreen fg-white"><a href="/dashboards/' + dashboard[0].dataset.id + '/device/' + tiles[tile].id + '">Edit</a>')
+            $(tiles[tile]).append(badge);
+        }
+    };
+}
+
+function hideEdit() {
+    //alert('do something');
+    var dashboard = $('#dashboard');
+    var tiles = $('#dashboard').find('.tile-badge').hide();
 }
