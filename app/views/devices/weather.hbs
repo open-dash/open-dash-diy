@@ -1,10 +1,7 @@
-<div id="{{device.id}}" class="tile text-shadow" data-role="tile">
-    <div class="tile-content">
+<div id="{{device.id}}" class="tile tile-wide text-shadow" data-role="tile">
+    <div class="tile-content" data-action="switch" data-command="toggle">
         <span class="tile-label">{{device.name}}</span>
         <span id="details_{{device.id}}">
-            temperature: <span class="temperature"></span> battery: <span class="battery"></span> contact: <span
-            class="contact"></span> threeAxis: <span class="threeAxis"></span> acceleration: <span class="acceleration"></span>        status: <span class="status"></span> level: <span class="level"></span> switch: <span class="switch"></span> Motion:
-        <span class="motion"></span>
         </span>
     </div>
 </div>
@@ -18,6 +15,7 @@
     commands = commands.replace(/(.*?),\s*(\}|])/g, "$1$2");
     var cmds = JSON.parse(commands);
     for (var i in attribs.attributes) {
-        $('#details_{{device.id}}').find("." + i).html(attribs.attributes[i]);
+        $('#details_{{device.id}}').append(i + ": <span class='" + i + "'>" + attribs.attributes[i] + "</span> ");
     }
+
 </script>
