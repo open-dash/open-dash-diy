@@ -13,7 +13,7 @@ module.exports.set = function(app) {
         response.setHeader('Content-Type', 'application/json');
         getWeather(function(err, result) {
             if (err) {
-                response.status(500).send({ error: 'something went wrong' });
+                response.status(500).send({ error: err });
             } else {
                 response.send(result);
             }
@@ -30,7 +30,9 @@ module.exports.set = function(app) {
             url: url,
             json: true
         }, function(error, response, body) {
-
+            if (body.error) {
+                callback(body.error)
+            }
             if (!error && response.statusCode === 200) {
                 callback(null, body);
             } else {
