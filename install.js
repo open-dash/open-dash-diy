@@ -30,7 +30,7 @@ if (!fs.existsSync('data/updates.json')) {
 
 if (!fs.existsSync('data/smartthings.json')) {
     //create settings.json
-    fs.writeFile('data/smartthings.json', JSON.stringify(devices), function(err) {
+    fs.writeFile('data/smartthings.json', JSON.stringify(smartthings), function(err) {
         if (err) {
             return console.log(err);
         }
