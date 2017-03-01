@@ -34,13 +34,15 @@ Put in TOKEN and API URL and save settings
 
 After saving, you should see weather start to populate upper right near menu.  If so, you are connected to SmartThings Open-Dash API SmartApp
 
-Go To Menu -> Devices
+Go To Menu -> SmartThings
 
 Click "Get Devices From SmartThings"
 
 After a few seconds, should populate the table with all your subscribed to devices
 
 Click "Save Devices" to save them to the local JSON file
+
+Repeat for each tab.
 
 Go to Menu -> Dashboards
 
