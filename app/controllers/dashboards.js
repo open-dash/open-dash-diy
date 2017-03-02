@@ -30,8 +30,10 @@ module.exports.set = function(app) {
             }
         });
         var css = "";
-        if (dashboard.css && dashboard.css != "none") {
-            var css = Buffer.from(styles.styles.dashboards[dashboard.css].css, 'base64').toString();
+        for (var s in styles.styles.dashboards) {
+            if (s == dashboard.css.toString()) {
+                css = Buffer.from(styles.styles.dashboards[s].css, 'base64').toString();
+            }
         }
         response.render('dashboard', {
             version: config.settings.version,
