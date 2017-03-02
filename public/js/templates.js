@@ -55,7 +55,7 @@ $(function() {
             //data: JSON.stringify(emptyDevice),
             //contentType: 'application/json',
             complete: function(data) {
-                $('#templateEditor').text(data.responseText);
+                $('#templateEditor').val(data.responseText);
                 $('#name').val(name);
                 $('#id').val(id);
             }
