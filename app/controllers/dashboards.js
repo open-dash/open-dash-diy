@@ -24,7 +24,11 @@ module.exports.set = function(app) {
 
     app.get('/dashboards/:id', (request, response) => {
         var dashboard = {};
-        dashboards.dashboards.forEach((dash) => { dashboard = (dash.id == request.params.id) ? dash : null });
+        dashboards.dashboards.forEach((dash) => {
+            if (dash.id == request.params.id) {
+                dashboard = dash
+            }
+        });
         var css = "";
         if (dashboard.css && dashboard.css != "none") {
             var css = Buffer.from(styles.styles.dashboards[dashboard.css].css, 'base64').toString();

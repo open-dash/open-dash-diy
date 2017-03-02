@@ -45,7 +45,11 @@ module.exports.set = function(app) {
 
 var getTile = function(dashId, id, callback) {
     var dashboard = {};
-    dashboards.dashboards.forEach((dash) => { dashboard = (dash.id == dashId) ? dash : null });
+    dashboards.dashboards.forEach((dash) => {
+        if (dash.id == dashId) {
+            dashboard = dash
+        }
+    });
     var device = null;
     dashboard.devices.forEach((dev) => {
         if (dev.id == id) {
