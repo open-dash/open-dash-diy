@@ -249,6 +249,7 @@ var addDashboard = function(data, callback) {
     var dashboard = {};
     dashboard.id = getId();
     dashboard.name = data.name;
+    dashboard.css = "none";
     dashboard.devices = [];
     dashboards.dashboards.push(dashboard);
     dashboards.save();
