@@ -17,7 +17,6 @@ $(document).ready(function() {
             return sortStatus;
         });
         dashboard.html("");
-        $('#dashboard').css('background-image', 'url(https://lh4.googleusercontent.com/-N0Ic1VbN2UE/Ui_eJHugZ2I/AAAAAAAAFzg/P9N-QNQisVI/s1280-w1280-c-h720/farm_in_the_prairie.jpg)');
         var i = 1;
         devices.forEach(dev => {
             $.get('/device/' + dashboard[0].dataset.id + '/' + dev.id, function(data, status) {
