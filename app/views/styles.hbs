@@ -1,0 +1,30 @@
+<div class="grid" style="background-color: #fff;color:#000;margin:0;opacity: .7;padding:15px">
+    <h2>Styles</h2>
+    <div class="row cells10">
+        <div class="cell padding10 colspan2">
+            <h3>CSS Styles</h3>
+            <div class="treeview" data-role="treeview">
+                <ul id="tempMenu">
+                    {{#each styles}}
+                    <li><span id="temp_{{@index}}" class="leaf">{{name}}</span></li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        <div class="cell padding10  colspan8">
+            <h3>Style editor</h3>
+            <ul class="horizontal-menu">
+                <li id="new"><a href="#">New Style</a></li>
+                <li id="delete"><a href="#">Delete Style</a></li>
+                <li id="rename"><a href="#">Name: </a><input id="name" class="input-control  text" type="text" value=""></li>
+                <li id="save"><a href="#">Save</a></li>
+                <li id="res"><span id="results"></span></li>
+            </ul>
+            <div class="input-control textarea " data-role="input" data-text-auto-resize="false" style="width:100%; min-height:100%;height:60vh;">
+                <textarea type="text" id="styleEditor"></textarea>
+                <input type="hidden" id="id">
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/js/styles.js"></script>

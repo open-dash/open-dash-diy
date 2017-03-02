@@ -263,6 +263,7 @@ var saveDashboard = function(id, body, callback) {
         }
     }
     dashboard.name = body.name
+    dashboard.css = body.css
     dashboards.save();
     callback(null, "success");
 };

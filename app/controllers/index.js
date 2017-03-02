@@ -6,6 +6,7 @@ var settings = require('./settings');
 var updates = require('./updates');
 var cameras = require('./cameras');
 var templates = require('./templates');
+var styles = require('./styles');
 
 module.exports.set = function(app) {
     home.set(app);
@@ -16,4 +17,5 @@ module.exports.set = function(app) {
     updates.set(app);
     cameras.set(app);
     templates.set(app);
+    styles.set(app);
 }

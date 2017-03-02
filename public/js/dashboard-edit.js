@@ -20,13 +20,13 @@ $(function() {
 
     $("#saveDashboard").on('click', function(e) {
         var id = this.dataset.id;
-
+        var css = $('#css').val();
         //alert($('#dashName').val());
         $.ajax({
             type: 'POST',
             url: '/api/dashboard/' + id + '/save',
             dataType: 'json',
-            data: '{ "name": ' + JSON.stringify($('#dashName').val()) + ' }',
+            data: '{ "name": ' + JSON.stringify($('#dashName').val()) + ', "css" : ' + css + ' }',
             contentType: 'application/json',
             complete: function(data) {
                 // do something
@@ -102,7 +102,11 @@ $(function() {
             }
         });
     });
+});
 
+$(document).ready(function() {
+    var cssId = $('#cssId').val();
+    $('#css').val(cssId);
 });
 
 function toggle(source) {

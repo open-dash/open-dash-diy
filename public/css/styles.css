@@ -45,3 +45,17 @@
     background-color: inherit !important;
     border: 1px solid #1ba1e2;
 }
+
+.tile {
+    display: block;
+    float: left;
+    margin: 0px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.tile-wide {
+    width: 300px;
+}

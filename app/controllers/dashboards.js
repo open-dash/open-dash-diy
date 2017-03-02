@@ -9,6 +9,7 @@ var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 var dashboards = new SelfReloadJSON(appRoot + '/data/dashboards.json');
 var smartthings = new SelfReloadJSON(appRoot + '/data/smartthings.json');
 var cameras = new SelfReloadJSON(appRoot + '/data/cameras.json');
+var styles = new SelfReloadJSON(appRoot + '/data/styles.json');
 
 module.exports.set = function(app) {
 
@@ -23,11 +24,11 @@ module.exports.set = function(app) {
     app.get('/dashboards/:id', (request, response) => {
         var dashboard = {};
         dashboards.dashboards.forEach((dash) => { dashboard = (dash.id == request.params.id) ? dash : null });
-
+        var css = Buffer.from(styles.styles.dashboards[dashboard.css].css, 'base64').toString();
         response.render('dashboard', {
-
             version: config.settings.version,
-            dashboard: dashboard
+            dashboard: dashboard,
+            css: css
         });
     });
 
@@ -40,13 +41,17 @@ module.exports.set = function(app) {
             }
         });
         var sortedDashDevices = dashboard.devices.sort(sortByOrder);
-
+        var style = []
+        styles.styles.dashboards.forEach(temp => {
+            style.push({ name: temp.name, css: Buffer.from(temp.css, 'base64').toString() })
+        });
         response.render('dashboard-edit', {
             version: config.settings.version,
             dashboard: dashboard,
             dashDevices: sortedDashDevices,
             devices: sortedDevices,
-            cameras: cameras.cameras
+            cameras: cameras.cameras,
+            css: style
         });
     });
 

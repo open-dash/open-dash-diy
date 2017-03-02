@@ -4,6 +4,7 @@ var weather = require('./weather');
 var settingsAPI = require('./settings');
 var cameras = require('./cameras');
 var templates = require('./templates');
+var styles = require('./styles');
 
 module.exports.set = function(app) {
     smartthings.set(app);
@@ -12,4 +13,5 @@ module.exports.set = function(app) {
     settingsAPI.set(app);
     cameras.set(app);
     templates.set(app);
+    styles.set(app);
 }
