@@ -1,61 +1,120 @@
 const express = require('express');
-const request = require('request');
 const app = express();
+const exphbs = require('express-handlebars');
+const request = require('request');
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
-var updates = new SelfReloadJSON(appRoot + '/data/updates.json');
+const dashboards = require('../../data/dashboards.json');
+var smartthings = new SelfReloadJSON(appRoot + '/data/smartthings.json');
+var styles = new SelfReloadJSON(appRoot + '/data/styles.json');
+const simpleOauthModule = require('simple-oauth2');
+var ip = require('ip');
+var oauth2;
+var accessURL;
+var authorizationUri;
+var endpoints_uri = 'https://graph.api.smartthings.com/api/smartapps/endpoints';
 
-var doUpdates = false;
 
 module.exports.set = function(app) {
-    app.get('/updates', function(req, res) {
-        res.setHeader('Content-Type', 'application/json');
-        if (config.settings.token != "") {
-            doUpdates = true;
-        } else {
-            doUpdates = false
-        }
-        getUpdates(function(err, result) {
-            if (err) {
-                response.send(500, { error: 'something went wrong' });
-            } else {
-                updates.updates = result;
-                updates.save();
-                res.send(result);
-            }
+
+    app.get('/settings', (request, response) => {
+        response.render('settings', {
+            version: config.settings.version,
+            settings: config.settings,
+            css: css
         });
     });
 
-    setInterval(function() {
-        if (doUpdates) {
-            getUpdates(function(err, result) {
-                if (err) {
-                    console.log('something went wrong');
-                } else {
-                    updates.updates = result;
-                    updates.save();
-                }
-            });
+    app.get('/settings/auth', function(req, res) {
+        //console.log(authorizationUri)';
+        try {
+            initOauth();
+        } catch (err) {
+            console.log("no client or secret set");
         }
-    }, 5000);
+        res.redirect(authorizationUri);
+    });
 
-    var getUpdates = function(callback) {
-        var endpoint = "/updates";
-        var token = config.settings.token;
-        var url = config.settings.apiUrl + endpoint + '?access_token=' + token;
-        //console.log("getting updates from " + url);
+    app.get('/settings/callback', function(req, res) {
+        const code = req.query.code;
+        try {
+            initOauth();
+        } catch (err) {
+            console.log("no client or secret set");
+        }
+        var redirectUrl = "http://" + ip.address() + ":3000/settings/callback";
 
-        request({
-            url: url,
-            json: true
-        }, function(error, response, body) {
+        oauth2.authorizationCode.getToken({
+            code: code,
+            redirect_uri: redirectUrl
+        }, saveToken);
 
-            if (!error && response.statusCode === 200) {
-                callback(null, body);
+        function saveToken(error, result) {
+            if (error) {
+                console.log('Access Token Error', error.message);
             } else {
-                callback(error);
+                config.settings.token = result.access_token;
+
+                var sendreq = {
+                    method: "GET",
+                    uri: endpoints_uri + "?access_token=" + result.access_token
+                };
+                request(sendreq, function(err, res1, body) {
+                    var endpoints = JSON.parse(body);
+                    //TODO store locations information location.id and location.home
+                    //console.log(endpoints);
+                    // we just show the final access URL and Bearer code
+                    var access_url = endpoints[0].url
+
+                    accessURL = 'https://graph.api.smartthings.com/' + access_url;
+                    apiURL = endpoints[0].uri;
+
+                    config.settings.apiUrl = apiURL;
+                    config.save();
+                    res.render('settings', {
+                        version: config.settings.version,
+                        settings: config.settings
+                    });
+
+                });
             }
+        }
+    });
+
+    app.get('/settings/endpoints', function(req, res) {
+        var response = "";
+        var options = {
+            uri: endpoints_uri + "?access_token=" + token,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        };
+        request(options, function(err, res1, body) {
+            var endpoints = JSON.parse(body);
+            res.send('endpoints are: ' + endpoints[0].location.name + endpoints[0].uri);
+        });
+    });
+
+    var initOauth = function() {
+        oauth2 = simpleOauthModule.create({
+            client: {
+                id: config.settings.clientId,
+                secret: config.settings.clientSecret
+            },
+            auth: {
+                tokenHost: 'https://graph.api.smartthings.com',
+                tokenPath: '/oauth/token',
+                authorizePath: '/oauth/authorize',
+            },
+        });
+        var redirectUrl = "http://" + ip.address() + ":3000/settings/callback";
+        authorizationUri = oauth2.authorizationCode.authorizeURL({
+            redirect_uri: redirectUrl,
+            scope: 'app',
+            state: '3(#0/!~'
         });
     };
 };

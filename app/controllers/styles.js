@@ -13,8 +13,10 @@ module.exports.set = function(app) {
         styles.styles.dashboards.forEach(temp => {
             style.push({ name: temp.name, css: Buffer.from(temp.css, 'base64').toString() })
         });
+        var css = Buffer.from(styles.styles.global, 'base64').toString();
         response.render('styles', {
-            styles: style
+            styles: style,
+            css: css
         });
     });
 

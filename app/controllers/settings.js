@@ -7,6 +7,7 @@ const appRoot = require('app-root-path');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 const dashboards = require('../../data/dashboards.json');
 var smartthings = new SelfReloadJSON(appRoot + '/data/smartthings.json');
+var styles = new SelfReloadJSON(appRoot + '/data/styles.json');
 const simpleOauthModule = require('simple-oauth2');
 var ip = require('ip');
 var oauth2;
@@ -18,9 +19,11 @@ var endpoints_uri = 'https://graph.api.smartthings.com/api/smartapps/endpoints';
 module.exports.set = function(app) {
 
     app.get('/settings', (request, response) => {
+        var css = Buffer.from(styles.styles.global, 'base64').toString();
         response.render('settings', {
             version: config.settings.version,
-            settings: config.settings
+            settings: config.settings,
+            css: css
         });
     });
 

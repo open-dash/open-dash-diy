@@ -15,9 +15,11 @@ var templates = new SelfReloadJSON(appRoot + '/data/templates.json');
 module.exports.set = function(app) {
 
     app.get('/dashboards', (request, response) => {
+        var css = Buffer.from(styles.styles.global, 'base64').toString();
         response.render('dashboards', {
             version: config.settings.version,
-            dashboards: dashboards.dashboards
+            dashboards: dashboards.dashboards,
+            css: css
         });
     });
 
@@ -29,6 +31,7 @@ module.exports.set = function(app) {
                 dashboard = dash
             }
         });
+        var globalcss = Buffer.from(styles.styles.global, 'base64').toString();
         var css = "";
         for (var s in styles.styles.dashboards) {
             if (s == dashboard.css.toString()) {
@@ -38,7 +41,7 @@ module.exports.set = function(app) {
         response.render('dashboard', {
             version: config.settings.version,
             dashboard: dashboard,
-            css: css
+            dashcss: css
         });
     });
 
@@ -67,8 +70,11 @@ module.exports.set = function(app) {
 
     app.get('/dashboards/:id/device/:deviceId', (request, response) => {
         var dashboard = {};
-        dashboards.dashboards.forEach((dash) => { dashboard = (dash.id == request.params.id) ? dash : null });
-
+        for (var d in dashboards.dashboards) {
+            if (dashboards.dashboards[d].id == request.params.id) {
+                dashboard = dashboards.dashboards[d];
+            }
+        }
         var device = {};
         dashboard.devices.forEach((dev) => {
             if (dev.id == request.params.deviceId) {
@@ -80,11 +86,13 @@ module.exports.set = function(app) {
         var temps = templates.templates.map(e => e.id);
 
         //console.log(sortedDevices);
+        var css = Buffer.from(styles.styles.global, 'base64').toString();
         response.render('dashboard-device', {
             version: config.settings.version,
             dashboard: dashboard,
             device: device,
-            templates: temps
+            templates: temps,
+            css: css
         });
     });
 
