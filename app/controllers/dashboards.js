@@ -10,6 +10,7 @@ var dashboards = new SelfReloadJSON(appRoot + '/data/dashboards.json');
 var smartthings = new SelfReloadJSON(appRoot + '/data/smartthings.json');
 var cameras = new SelfReloadJSON(appRoot + '/data/cameras.json');
 var styles = new SelfReloadJSON(appRoot + '/data/styles.json');
+var templates = new SelfReloadJSON(appRoot + '/data/templates.json');
 
 module.exports.set = function(app) {
 
@@ -70,18 +71,14 @@ module.exports.set = function(app) {
         });
 
         //get device templates
-        var files = fs.readdirSync(__dirname + "/../views/devices/");
-        var templates = [];
-        files.forEach(file => {
-            templates.push(file.toString().replace(".hbs", "").toLowerCase());
-        });
+        var temps = templates.templates.map(e => e.id);
 
         //console.log(sortedDevices);
         response.render('dashboard-device', {
             version: config.settings.version,
             dashboard: dashboard,
             device: device,
-            templates: templates
+            templates: temps
         });
     });
 

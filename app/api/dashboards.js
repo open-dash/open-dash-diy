@@ -10,6 +10,7 @@ var dashboards = new SelfReloadJSON(appRoot + '/data/dashboards.json');
 var smartthings = new SelfReloadJSON(appRoot + '/data/smartthings.json');
 var cameras = new SelfReloadJSON(appRoot + '/data/cameras.json');
 var updates = new SelfReloadJSON(appRoot + '/data/updates.json');
+var templates = new SelfReloadJSON(appRoot + '/data/templates.json');
 
 module.exports.set = function(app) {
 
@@ -166,23 +167,17 @@ var updateDashboard = function(cmd, id, data, callback) {
                         //console.log('already exists');
                     } else {
                         var device = {};
-                        var files = fs.readdirSync(__dirname + "/../views/devices/");
-                        //console.log(files);
-                        var templates = [];
-                        files.forEach(file => {
-                            //console.log(file);
-                            templates.push(file.toString().replace(".hbs", "").toLowerCase());
-                        });
+                        var temps = templates.templates.map(e => e.id);
                         for (i = 0; smartthings.devices.length > i; i++) {
                             if (smartthings.devices[i].id == data[x]) {
                                 var dashDevice = smartthings.devices[i];
-                                if (templates.indexOf(dashDevice.type) >= 0) {
+                                if (temps.indexOf(dashDevice.type) >= 0) {
                                     dashDevice.template = dashDevice.type
                                 } else {
-                                    for (var f in templates) {
-                                        var xx = templates[f];
-                                        if (dashDevice.type.toLowerCase().includes(templates[f].toLowerCase())) {
-                                            dashDevice.template = templates[f];
+                                    for (var f in temps) {
+                                        var xx = temps[f];
+                                        if (dashDevice.type.toLowerCase().includes(temps[f].toLowerCase())) {
+                                            dashDevice.template = temps[f];
                                         }
                                     }
                                     if (dashDevice.template == null) { dashDevice.template = "default" }
