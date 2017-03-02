@@ -26,7 +26,7 @@ module.exports.set = function(app) {
         var dashboard = {};
         dashboards.dashboards.forEach((dash) => { dashboard = (dash.id == request.params.id) ? dash : null });
         var css = "";
-        if (dashboard.css != "none") {
+        if (dashboard.css && dashboard.css != "none") {
             var css = Buffer.from(styles.styles.dashboards[dashboard.css].css, 'base64').toString();
         }
         response.render('dashboard', {
