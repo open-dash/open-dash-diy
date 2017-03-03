@@ -41,7 +41,8 @@ module.exports.set = function(app) {
         response.render('dashboard', {
             version: config.settings.version,
             dashboard: dashboard,
-            dashcss: css
+            dashcss: css,
+            css: globalcss
         });
     });
 
