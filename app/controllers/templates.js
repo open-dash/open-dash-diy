@@ -21,5 +21,17 @@ module.exports.set = function(app) {
             css: css
         });
     });
-
+    app.get('/templates/:id', (request, response) => {
+        var temps = []
+        templates.templates.forEach(temp => {
+            temps.push({ id: temp.id, content: Buffer.from(temp.content, 'base64').toString() })
+        });
+        var css = Buffer.from(styles.styles.global, 'base64').toString();
+        response.render('templates', {
+            version: config.settings.version,
+            templates: temps,
+            css: css,
+            id: request.params.id
+        });
+    });
 };

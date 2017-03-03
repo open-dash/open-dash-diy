@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="css/codemirror.css">
-<script src="js/codemirror.js"></script>
+<link rel="stylesheet" href="/css/codemirror.css">
+<script src="/js/codemirror.js"></script>
 <div class="grid" style="background-color: #fff;color:#000;margin:0;opacity: .7;padding:15px">
     <h2>Templates</h2>
     <div class="row cells10">
@@ -8,7 +8,7 @@
             <div class="treeview" data-role="treeview">
                 <ul id="tempMenu">
                     {{#each templates}}
-                    <li><span id="temp_{{@index}}" class="leaf">{{id}}</span></li>
+                    <li><span id="temp_{{@index}}" class="leaf"><a href="/templates/{{@index}}">{{id}}</a></span></li>
                     {{/each}}
                 </ul>
             </div>
@@ -16,7 +16,7 @@
         <div class="cell padding10  colspan8">
             <h3>Template editor</h3>
             <ul class="horizontal-menu">
-                <li id="new"><a href="#">New Template</a></li>
+                <li id="new"><a href="/templates">New Template</a></li>
                 <li id="delete"><a href="#">Delete Template</a></li>
                 <li id="rename"><a href="#">Name: </a><input id="name" class="input-control  text" type="text" value=""></li>
                 <li id="save"><a href="#">Save</a></li>
@@ -24,7 +24,7 @@
             </ul>
             <div class="input-control textarea " data-role="input" data-text-auto-resize="false" style="width:100%; ">
                 <textarea type="text" id="templateEditor"></textarea>
-                <input type="hidden" id="id">
+                <input type="hidden" id="id" value="{{id}}">
             </div>
         </div>
     </div>

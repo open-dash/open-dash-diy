@@ -44,8 +44,10 @@ module.exports.set = function(app) {
     });
 }
 
-var getTemplate = function(id, callback) {
-    var template = Buffer.from(templates.templates[id].content, 'base64').toString();
+var getTemplate = function(tempid, callback) {
+    var template = {};
+    template.css = Buffer.from(templates.templates[tempid].content, 'base64').toString();
+    template.name = templates.templates[tempid].id;
     callback(null, template)
 }
 
