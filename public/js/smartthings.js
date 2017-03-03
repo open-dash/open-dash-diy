@@ -119,7 +119,7 @@ $(function() {
             contentType: 'application/json',
             complete: function(data) {
                 // do something
-                $('#results').text("Successfully Saved");
+                $('#results_routines').text("Successfully Saved");
                 //location.reload();
             }
         });
@@ -134,7 +134,7 @@ $(function() {
             contentType: 'application/json',
             complete: function(data) {
                 // do something
-                $('#results').text("Successfully Saved");
+                $('#results_locations').text("Successfully Saved");
                 //location.reload();
             }
         });
@@ -149,7 +149,7 @@ $(function() {
             contentType: 'application/json',
             complete: function(data) {
                 // do something
-                $('#results').text("Successfully Saved");
+                $('#results_modes').text("Successfully Saved");
                 //location.reload();
             }
         });
