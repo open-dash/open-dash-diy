@@ -4,6 +4,9 @@
      $("#save").on('click', function(e) {
          e.preventDefault();
          var id = $("#id").val();
+         if (id == "") {
+             id = $('#tempMenu').find('li').length;
+         }
          var name = $("#name").val();
          var content = editor.getDoc().getValue();
          if (name == "") {
@@ -24,6 +27,7 @@
                      //setInterval(function () {
                      //location.reload();
                      //}, 2000);
+                     window.location = "/templates/" + id;
                  }
              });
          }
@@ -42,6 +46,7 @@
          //var content = editor.getDoc().getValue();
          editor.getDoc().setValue("");
          var content = $('#templateEditor').val("");
+         window.location = "/templates";
      });
 
      $("#delete").on('click', function(e) {
@@ -62,6 +67,7 @@
                      //setInterval(function () {
                      //location.reload()
                      //}, 2000);
+                     window.location = "/templates";
                  }
              });
          } else { alert("Can't delete an empty template"); }
