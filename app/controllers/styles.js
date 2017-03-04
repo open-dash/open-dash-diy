@@ -4,6 +4,7 @@ const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 var styles = new SelfReloadJSON(appRoot + '/data/styles.json');
+var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 
 module.exports.set = function(app) {
 
@@ -15,6 +16,7 @@ module.exports.set = function(app) {
         });
         var css = Buffer.from(styles.styles.global, 'base64').toString();
         response.render('styles', {
+            version: config.settings.version,
             styles: style,
             css: css
         });
@@ -28,6 +30,7 @@ module.exports.set = function(app) {
         });
         var css = Buffer.from(styles.styles.global, 'base64').toString();
         response.render('styles', {
+            version: config.settings.version,
             styles: style,
             css: css,
             id: request.params.id
