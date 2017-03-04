@@ -2,7 +2,11 @@
  editor.setSize(800, 500);
  $(function() {
      $("#save").on('click', function(e) {
+         e.preventDefault();
          var id = $("#id").val();
+         if (id == "") {
+             id = $('#tempMenu').fund('li').length
+         }
          var name = $("#name").val();
          //var content = $('#styleEditor').val();
          var content = editor.getDoc().getValue();
@@ -18,10 +22,17 @@
                  complete: function(data) {
                      // do something
                      $('#results').text("Successfully Saved");
-                     setInterval(function() { location.reload() }, 2000);
+                     //setInterval(function () {
+                     //location.reload()
+                     window.location = "/styles/" + id;
+                     //}, 2000);
                  }
              });
          }
+     });
+
+     $("#name").on('click', function(e) {
+         e.preventDefault();
      });
 
      $("#new").on('click', function(e) {
@@ -30,25 +41,30 @@
          $("#id").val(id);
          var name = $("#name").val("");
          var content = $('#styleEditor').val("");
+         window.location = "/styles";
      });
 
      $("#delete").on('click', function(e) {
+         e.preventDefault();
          var id = $("#id").val();
-         $.ajax({
-             type: 'DELETE',
-             url: '/api/styles/' + id,
-             dataType: 'json',
-             data: JSON.stringify({ "id": id }),
-             contentType: 'application/json',
-             complete: function(data) {
-                 // do something
-                 $('#results').text("Successfully Deleted");
-                 setInterval(function() { location.reload() }, 2000);
-             }
-         });
+         if (id != "") {
+             $.ajax({
+                 type: 'DELETE',
+                 url: '/api/styles/' + id,
+                 dataType: 'json',
+                 data: JSON.stringify({ "id": id }),
+                 contentType: 'application/json',
+                 complete: function(data) {
+                     // do something
+                     $('#results').text("Successfully Deleted");
+                     //setInterval(function() { location.reload() }, 2000);
+                     window.location = "/styles";
+                 }
+             });
+         }
      });
 
-     $(".leaf").on('click', function(e) {
+     /*$(".leaf").on('click', function(e) {
          var id = this.id.replace("temp_", "");
          var name = this.textContent;
          $.ajax({
@@ -69,12 +85,17 @@
                  }
              }
          });
-     });
+     });*/
 
  });
 
  $(document).ready(function() {
-     var id = $("#tempMenu").find("li").length;
-     $("#id").val(id);
-
+     var id = $('#id').val();
+     if (id != "") {
+         $.getJSON('/api/styles/' + id + '', function(data) {
+             //$('#templateEditor').val(data.responseText);
+             editor.getDoc().setValue(data.css);
+             $('#name').val(data.name); //$('#id').val(id);
+         });
+     }
  });

@@ -44,12 +44,14 @@ module.exports.set = function(app) {
     });
 }
 
-var getStyle = function(id, callback) {
-    var style;
-    if (id == "0") {
-        style = Buffer.from(styles.styles.global, 'base64').toString();
+var getStyle = function(tempid, callback) {
+    var style = {};
+    if (tempid == "0") {
+        style.css = Buffer.from(styles.styles.global, 'base64').toString();
+        style.name = "global";
     } else {
-        var style = Buffer.from(styles.styles.dashboards[id - 1].css, 'base64').toString();
+        style.css = Buffer.from(styles.styles.dashboards[tempid - 1].css, 'base64').toString();
+        style.name = styles.styles.dashboards[tempid - 1].name;
     }
     callback(null, style)
 }

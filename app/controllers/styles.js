@@ -20,4 +20,17 @@ module.exports.set = function(app) {
         });
     });
 
+    app.get('/styles/:id', (request, response) => {
+        var style = []
+        style.push({ "name": "global", "css": Buffer.from(styles.styles.global, 'base64').toString() });
+        styles.styles.dashboards.forEach(temp => {
+            style.push({ name: temp.name, css: Buffer.from(temp.css, 'base64').toString() })
+        });
+        var css = Buffer.from(styles.styles.global, 'base64').toString();
+        response.render('styles', {
+            styles: style,
+            css: css,
+            id: request.params.id
+        });
+    });
 };
