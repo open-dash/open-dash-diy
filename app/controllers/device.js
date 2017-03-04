@@ -21,7 +21,7 @@ module.exports.set = function(app) {
             var t = "0";
 
             for (i = 0; i < templates.templates.length; i++) {
-                if (templates.templates[i].id == result.template) {
+                if (templates.templates[i].id.toLowerCase() == result.template) {
                     t = i;
                 }
             }

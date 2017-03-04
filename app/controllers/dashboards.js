@@ -84,7 +84,7 @@ module.exports.set = function(app) {
         });
 
         //get device templates
-        var temps = templates.templates.map(e => e.id);
+        var temps = templates.templates.map(e => e.id.toLowerCase());
 
         //console.log(sortedDevices);
         var css = Buffer.from(styles.styles.global, 'base64').toString();
