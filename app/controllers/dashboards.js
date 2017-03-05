@@ -102,6 +102,6 @@ module.exports.set = function(app) {
     }
 
     function sortByOrder(x, y) {
-        return ((x.order == y.order) ? 0 : ((x.order > y.order) ? 1 : -1));
+        return ((parseInt(x.order) == parseInt(y.order)) ? 0 : ((parseInt(x.order) > parseInt(y.order)) ? 1 : -1));
     }
 };
