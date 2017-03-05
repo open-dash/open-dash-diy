@@ -49,22 +49,38 @@ module.exports.set = function(app) {
             if (toImport.styles[i].name.toLowerCase() == "global") {
                 styles.styles.global = toImport.styles[i].css;
             } else {
+                var match = false;
                 for (var x in styles.styles.dashboards) {
                     if (toImport.styles[i].name.toLowerCase() == styles.styles.dashboards[x].name.toLowerCase()) {
                         styles.styles.dashboards[x].name = toImport.styles[i].name
                         styles.styles.dashboards[x].css = toImport.styles[i].css
+                        match = true;
                     }
+                }
+                if (!match) {
+                    var t = {};
+                    t.id = styles.styles.dashboards.length;
+                    t.css = toImport.styles[i].css;
+                    t.name = toImport.styles[i].name
+                    styles.styles.dashboards.push(t);
                 }
             }
         }
         styles.save()
         for (var i in toImport.templates) {
+            var match = false;
             for (var x in templates.templates) {
                 if (toImport.templates[i].name.toLowerCase() == templates.templates[x].id.toLowerCase()) {
                     templates.templates[x].id = toImport.templates[i].name
                     templates.templates[x].content = toImport.templates[i].content
+                    match = true;
                 }
-
+            }
+            if (!match) {
+                var t = {};
+                t.id = toImport.templates[i].name;
+                t.content = toImport.templates[i].content
+                templates.templates.push(t);
             }
         }
         templates.save()
