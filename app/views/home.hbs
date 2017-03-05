@@ -1,36 +1,88 @@
-<div class="flex-grid" style="background-color: #fff;color:#000;margin:0;opacity: .85;padding:15px;">
-    <div>
-        <h3>About Open-Dash</h3>
-        <p>An open-source project built from the ground up...</p>
-    </div>
-    <div class="row cell-auto-size" style="margin-top:20px;">
-        <div class="cell size4 padding20">
-            <div><h3>Donate</h3>
-                <p>Donate your Time, Coding Skills, Design Skills, Testing, feedback or even Money.  Nothing in life is truely free, and your
-                donation will go to fund the development and collaboration resources needed to keep this project going.</p>
-                <p>Donations of $25USD or more will get a permanent shout out in our donators section and placement in the source code
-                and application screens.</p>
+<div class="tile-area no-padding bg-black" style="height: 100%; max-height: 100% !important;">
+    <div class="tile-container clear-float">
+        <div class="tile-group double">
+            <span class="tile-group-title">Project Info</span>
+            <div class="tile-wide padding20" data-role="tile">
+                <h3>About Open-Dash</h3>
+                <p>An open-source project built from the ground up...</p>
             </div>
-            <div class="margin40">
-                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                    <input type="hidden" name="cmd" value="_s-xclick">
-                    <input type="hidden" name="hosted_button_id" value="74ZLRLLETB45U">
-                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-                </form>
+            <div class="tile-large padding20" data-role="tile">
+                <div class="tile-content padding20">
+                    <h3>Donate</h3>
+                    <div>
+                        <p>Donate your Time, Coding Skills, Design Skills, Testing, feedback or even Money. Nothing in life
+                            is truely free, and your donation will go to fund the development and collaboration resources
+                            needed to keep this project going.
+                        </p>
+                        <p>Donations of $25USD or more will get a permanent shout out in our donators section and placement
+                            in the source code and application screens.</p>
+                    </div>
+                    <div>
+                        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <input type="hidden" name="cmd" value="_s-xclick">
+                            <input type="hidden" name="hosted_button_id" value="74ZLRLLETB45U">
+                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="dashList" class="cell size4 padding20">
-            <h3>Existing Dashboards</h3>
-            <ul class="simple-list large-bullet">
-                {{#each dashboards}}
-                <li><a href="/dashboards/{{id}}">{{name}}</a> : <a href="/dashboards/{{id}}/edit">edit</a></li>
-                {{/each}}
-            </ul>
+        <div class="tile-group double">
+            <span class="tile-group-title">Dashboards</span> {{#each dashboards}}
+            <div class="tile" data-role="tile" >
+                <a href="/dashboards/{{id}}"><div class="tile-content padding20">
+                    <h3>Dashboard {{name}}</h3>
+                </div></a>
+                <a class="tile-label" href="/dashboards/{{id}}/edit">edit</a>
+            </div>
+            {{/each}}
+            <div class="tile" data-role="tile">
+                <div class="tile-content padding20">
+                    <a href="/dashboards">
+                        <h3>Add A Dashboard</h3>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="cell size4 padding20">
-            <h3>Settings</h3>
-            <a href="/settings">Go To Settings</a>
+        <div class="tile-group double">
+            <span class="tile-group-title">Menu</span>
+            <div class="tile" data-role="tile">
+                <div class="tile-content iconic padding40">
+                    <a href="/smartthings"><span class="mif-chrome mif-4x"></span>
+                <span class="tile-label">SmartThings</span></a>
+                </div>
+            </div>
+            <div class="tile" data-role="tile">
+                <div class="tile-content iconic padding40">
+                    <a href="/cameras"><span class="mif-camera mif-4x"></span>
+                <span class="tile-label">Cameras</span></a>
+                </div>
+            </div>
+            <div class="tile" data-role="tile">
+                <div class="tile-content iconic padding40">
+                    <a href="/templates"><span class="mif-insert-template mif-4x"></span>
+                <span class="tile-label">Templates</span></a>
+                </div>
+            </div>
+            <div class="tile" data-role="tile">
+                <div class="tile-content iconic padding40">
+                    <a href="/styles"><span class="mif-layers mif-4x"></span>
+                <span class="tile-label">Styles</span></a>
+                </div>
+            </div>
+            <div class="tile" data-role="tile">
+                <div class="tile-content iconic padding40">
+                    <a href="/importexport"><span class="mif-enlarge2 mif-4x"></span>
+                <span class="tile-label">Import / Export</span></a>
+                </div>
+            </div>
+            <div class="tile" data-role="tile">
+                <div class="tile-content iconic padding40">
+                    <a href="/settings"><span class="mif-key mif-4x"></span>
+                <span class="tile-label">Settings</span></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
