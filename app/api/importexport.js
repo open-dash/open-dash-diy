@@ -1,6 +1,9 @@
 const express = require('express');
 const request = require('request');
 const bodyParser = require('body-parser');
+var multer = require('multer')
+var storage = multer.memoryStorage()
+var upload = multer({ storage: storage })
 const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
@@ -15,7 +18,6 @@ module.exports.set = function(app) {
         response.setHeader('Content-Type', 'application/json');
         var exported = request.body;
 
-        //loop through styles
         var exportStyles = [];
         request.body.styles.forEach((id) => {
 
@@ -24,7 +26,6 @@ module.exports.set = function(app) {
             });
         });
 
-        //loop through templates
         var exportTemplates = [];
         request.body.templates.forEach((id) => {
 
@@ -36,13 +37,40 @@ module.exports.set = function(app) {
         fullExport.styles = exportStyles;
         fullExport.templates = exportTemplates;
 
-        //figure out how to stream back a file.
-        // response.setHeader('Content-Type', 'application/text');
-        // response.setHeader('content-disposition', 'attachment; filename=export.json');
-        // response.send(fullExport);
-        // response.end();
-        response.send(fullExport);
+        response.send(JSON.stringify(fullExport));
     });
+
+    app.post('/importexport/upload', upload.single('upload-file'), (request, response, next) => {
+        var importJson = request.file.buffer.toString();
+        var toImport = JSON.parse(importJson.slice(1));
+        console.log(toImport);
+
+        for (var i in toImport.styles) {
+            if (toImport.styles[i].name.toLowerCase() == "global") {
+                styles.styles.global = toImport.styles[i].css;
+            } else {
+                for (var x in styles.styles.dashboards) {
+                    if (toImport.styles[i].name.toLowerCase() == styles.styles.dashboards[x].name.toLowerCase()) {
+                        styles.styles.dashboards[x].name = toImport.styles[i].name
+                        styles.styles.dashboards[x].css = toImport.styles[i].css
+                    }
+                }
+            }
+        }
+        styles.save()
+        for (var i in toImport.templates) {
+            for (var x in templates.templates) {
+                if (toImport.templates[i].name.toLowerCase() == templates.templates[x].id.toLowerCase()) {
+                    templates.templates[x].id = toImport.templates[i].name
+                    templates.templates[x].content = toImport.templates[i].content
+                }
+
+            }
+        }
+        templates.save()
+        response.send("Imported");
+    });
+
 }
 
 var getStyle = function(tempid, callback) {
@@ -62,7 +90,7 @@ var getTemplate = function(tempid, callback) {
     for (var i in templates.templates) {
         if (templates.templates[i].id == tempid) {
             template.name = templates.templates[i].id;
-            template.css = templates.templates[i].content;
+            template.content = templates.templates[i].content;
         }
     }
     callback(null, template)

@@ -1,6 +1,7 @@
 <script type="text/javascript" src="/js/FileSaver.min.js"></script>
 <script>
     var FilesSaver;
+
 </script>
 <div style="background-color: #fff;color:#000;margin:0;opacity: .7;padding:15px">
     <h2>Import / Export</h2>
@@ -11,11 +12,13 @@
                 <div id="import">
                     <h3>Import</h3>
                     <p>Please select a file to import containing Templates and/or Styles</p>
-                    <div class="input-control file" data-role="input">
-                        <input type="file">
-                        <button class="button"><span class="mif-folder"></span></button>
-                    </div>
-                    <input id="btnImport" class="button primary" type="button" value="Import">
+                    <form action="/importexport/upload" method="post" enctype="multipart/form-data">
+                        <div class="input-control file" data-role="input">
+                            <input type="file" name="upload-file">
+                            <button class="button"><span class="mif-folder"></span></button>
+                        </div>
+                        <input type="submit" value="Upload" class="button">
+                        </form>
                 </div>
                 <br/>
                 <div id="export">
