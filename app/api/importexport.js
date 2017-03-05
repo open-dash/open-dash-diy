@@ -43,7 +43,7 @@ module.exports.set = function(app) {
     app.post('/importexport/upload', upload.single('upload-file'), (request, response, next) => {
         var importJson = request.file.buffer.toString();
         var toImport = JSON.parse(importJson.slice(1));
-        console.log(toImport);
+        //console.log(toImport);
 
         for (var i in toImport.styles) {
             if (toImport.styles[i].name.toLowerCase() == "global") {
