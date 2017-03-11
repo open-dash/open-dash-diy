@@ -1,5 +1,5 @@
 var fs = require('fs');
-console.log("backing up data/smartthings.json")
+console.log("backing up data/dashboards.json")
 fs.writeFileSync('data/dashboards.bak', fs.readFileSync('data/dashboards.json'));
 var obj = JSON.parse(fs.readFileSync('data/dashboards.json', 'utf8'));
 for (var x in obj.dashboards) {
