@@ -249,28 +249,32 @@ var getModes = function(callback) {
 };
 
 var saveDevices = function(data, callback) {
-    var fs = require('fs');
+    data.forEach(d => {
+        for (var x in d.attributes) {
+            if (x == "stream") {
+                var fixed = JSON.stringify(d.attributes[x])
+                d.attributes[x] = fixed;
+            }
+        }
+    })
     smartthings.devices = data;
     smartthings.save();
     callback(null, "{ success }");
 };
 
 var saveRoutines = function(data, callback) {
-    var fs = require('fs');
     smartthings.routines = data;
     smartthings.save();
     callback(null, "{ success }");
 };
 
 var saveLocations = function(data, callback) {
-    var fs = require('fs');
     smartthings.locations = data;
     smartthings.save();
     callback(null, "{ success }");
 };
 
 var saveModes = function(data, callback) {
-    var fs = require('fs');
     smartthings.modes = data;
     smartthings.save();
     callback(null, "{ success }");
