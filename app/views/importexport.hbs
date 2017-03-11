@@ -39,13 +39,13 @@
                                     <th>Name</th>
                                 </tr>
                                 <tr>
-                                    <td class="col"><input id="cb_global" name="styleCB" type="checkbox" onClick="toggle(this)" class="input-control checkbox styles"
+                                    <td class="col"><input id="cb_global" name="styleCB" type="checkbox" class="input-control checkbox styles"
                                         /></td>
                                     <td>Global</td>
                                 </tr>
                                 {{#each styles.dashboards}}
                                 <tr>
-                                    <td class="col"><input id="cb_{{id}}" name="styleCB" type="checkbox" onClick="toggle(this)" class="input-control checkbox styles"
+                                    <td class="col"><input id="cb_{{id}}" name="styleCB" type="checkbox" class="input-control checkbox styles"
                                         /></td>
                                     <td class="col">{{name}}</td>
                                 </tr>
@@ -61,7 +61,7 @@
                                 </tr>
                                 {{#each templates}}
                                 <tr>
-                                    <td class="col"><input id="cb_{{id}}" name="templateCB" type="checkbox" onClick="toggle(this)" class="input-control checkbox templates"
+                                    <td class="col"><input id="cb_{{id}}" name="templateCB" type="checkbox" class="input-control checkbox templates"
                                         /></td>
                                     <td class="col">{{id}}</td>
                                 </tr>
