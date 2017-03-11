@@ -47,7 +47,20 @@ module.exports.set = function(app) {
     });
 
     app.get('/dashboards/:id/edit', (request, response) => {
-        var sortedDevices = smartthings.devices.sort(sortByType);
+        //Build list of devices here...
+        var sortedDevices = []
+        smartthings.devices.forEach(d => {
+            d.api = "smartthings";
+            sortedDevices.push(d);
+        });
+        smartthings.routines.forEach(r => {
+            r.api = "smartthings";
+            r.name = r.label;
+            r.commands = [{ command: "toggle" }];
+            r.type = "Routine";
+            sortedDevices.push(r);
+        })
+        sortedDevices = sortedDevices.sort(sortByType);
         var dashboard = {};
         dashboards.dashboards.forEach((dash) => {
             if (dash.id == request.params.id) {

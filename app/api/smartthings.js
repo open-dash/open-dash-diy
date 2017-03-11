@@ -32,6 +32,16 @@ module.exports.set = function(app) {
         });
     });
 
+    app.post('/api/smartthings/routines/:id', (request, response) => {
+        response.setHeader('Content-Type', 'application/json');
+        runRoutine(request.params.id, function(err, result) {
+            if (err) {
+                response.send(500, { error: 'something went wrong' });
+            } else {
+                response.send(result);
+            }
+        });
+    });
     app.get('/api/smartthings/locations', (request, response) => {
         response.setHeader('Content-Type', 'application/json');
         getLocations(function(err, result) {
@@ -172,6 +182,26 @@ var getRoutines = function(callback) {
     request({
         url: url,
         json: true
+    }, function(error, response, body) {
+
+        if (!error && response.statusCode === 200) {
+            callback(null, body);
+        } else {
+            callback(error);
+        }
+    });
+};
+
+var runRoutine = function(id, callback) {
+    var endpoint = "/routines/" + id;
+    var token = config.settings.token;
+    var url = config.settings.apiUrl + endpoint + '?access_token=' + token;
+
+    request.post({
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        url: url,
+        json: true,
+
     }, function(error, response, body) {
 
         if (!error && response.statusCode === 200) {

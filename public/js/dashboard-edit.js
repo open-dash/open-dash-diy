@@ -40,7 +40,7 @@ $(function() {
         var dashboardDevices = [];
         $.each($('.deviceCheckbox'), function(key, value) {
             if (this.checked) {
-                dashboardDevices.push(this.id.replace("cb_", ""));
+                dashboardDevices.push({ id: this.id.replace("cb_", ""), type: this.parentElement.parentElement.children[2].innerText, api: this.parentElement.parentElement.children[3].innerText });
             }
         });
         //alert(dashboardDevices);

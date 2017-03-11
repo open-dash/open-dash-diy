@@ -12,12 +12,14 @@
                             <th><input type="checkbox" onClick="toggle(this)" /></th>
                             <th>Display Name</th>
                             <th>Type</th>
+                            <th>API</th>
                         </tr>
                         {{#each devices}}
                         <tr>
                             <td><input type="checkbox" id="cb_{{id}}" name="deviceCB" class="deviceCheckbox" /></td>
                             <td>{{name}}</td>
                             <td>{{type}}</td>
+                            <td>{{api}}</td>
                         </tr>
                         {{/each}}
                     </table>

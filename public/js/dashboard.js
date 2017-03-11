@@ -66,6 +66,19 @@ $(document.body).on('click', '.tile', function(e) {
                 var x = status;
             });
             break;
+        case "routine":
+            console.log("toggle routine");
+            $.ajax({
+                type: 'POST',
+                url: '/api/smartthings/routines/' + id,
+                dataType: 'json',
+                //data: JSON.stringify(data),
+                contentType: 'application/json',
+                complete: function(data) {
+                    // do something
+                }
+            });
+            break;
             //TODO: Insert other commands here, remember to set data-action="cmd name" in the object that holds the value and triggers the command.
         default:
             console.log("no matching data-action found, is it set in the template?");
