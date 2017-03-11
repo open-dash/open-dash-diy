@@ -4,10 +4,15 @@
 
 </script>
 <div style="background-color: #fff;color:#000;margin:0;opacity: .7;padding:15px">
-    <h2>Import / Export</h2>
-    <div id="dashboards" class="flex-grid demo-grid">
-        <div class="row">
-            <div class="cell size4">
+    <h2> Import / Export</h2>
+    <div class="tabcontrol" data-role="tabcontrol">
+        <ul class="tabs">
+            <li><a href="#import">Import</a></li>
+            <li><a href="#export">Export</a></li>
+        </ul>
+
+        <div class="frames">
+            <div class="frame" id="import">
                 <p>This section allows you to import and export Templates and/or Styles and share them with others</p>
                 <div id="import">
                     <h3>Import</h3>
@@ -18,55 +23,55 @@
                             <button class="button"><span class="mif-folder"></span></button>
                         </div>
                         <input type="submit" value="Upload" class="button">
-                        </form>
+                    </form>
+                    <div>WARNING: Importing will override any template or style included in the uploaded file!</div>
                 </div>
-                <br/>
-                <div id="export">
-                    <h3>Export</h3>
-                    <div class="flex-grid demo-grid">
-                        <div class="row">
-                            <div class="cell size4 padding20">
-                                <h4>Styles</h4>
-                                <table class="table striped hovered cell-hovered border bordered table-condensed" id="tableStyles">
-                                    <tr>
-                                        <th class="col"><input type="checkbox" onClick="toggle(this)" /></th>
-                                        <th>Name</th>
-                                    </tr>
-                                    <tr>
-                                        <td class="col"><input id="cb_global" name="styleCB" type="checkbox" onClick="toggle(this)" class="input-control checkbox styles"
-                                            /></td>
-                                        <td>Global</td>
-                                    </tr>
-                                    {{#each styles.dashboards}}
-                                    <tr>
-                                        <td class="col"><input id="cb_{{id}}" name="styleCB" type="checkbox" onClick="toggle(this)" class="input-control checkbox styles"
-                                            /></td>
-                                        <td class="col">{{name}}</td>
-                                    </tr>
-                                    {{/each}}
-                                </table>
-                            </div>
-                            <div class="cell size4 padding20">
-                                <h4>Templates</h4>
-                                <table class="table striped hovered cell-hovered border bordered table-condensed" id="tableTemplates">
-                                    <tr>
-                                        <th class="col"><input type="checkbox" onClick="toggleTemplates(this)" /></th>
-                                        <th>Name</th>
-                                    </tr>
-                                    {{#each templates}}
-                                    <tr>
-                                        <td class="col"><input id="cb_{{id}}" name="templateCB" type="checkbox" onClick="toggle(this)" class="input-control checkbox templates"
-                                            /></td>
-                                        <td class="col">{{id}}</td>
-                                    </tr>
-                                    {{/each}}
-                                </table>
-                            </div>
-                            <div class="cell padding20">
-                                <h3>Export</h3>
-                                <input id="btnExport" class="button primary" type="button" value="Export Selected">
+            </div>
+            <div id="export" class="frame">
+                <h3>Export</h3>
+                <div class="flex-grid demo-grid">
+                    <div class="row">
+                        <div class="cell size2 padding20">
+                            <h4>Styles</h4>
+                            <table class="table striped hovered cell-hovered border bordered table-condensed" id="tableStyles">
+                                <tr>
+                                    <th class="col"><input type="checkbox" onClick="toggle(this)" /></th>
+                                    <th>Name</th>
+                                </tr>
+                                <tr>
+                                    <td class="col"><input id="cb_global" name="styleCB" type="checkbox" onClick="toggle(this)" class="input-control checkbox styles"
+                                        /></td>
+                                    <td>Global</td>
+                                </tr>
+                                {{#each styles.dashboards}}
+                                <tr>
+                                    <td class="col"><input id="cb_{{id}}" name="styleCB" type="checkbox" onClick="toggle(this)" class="input-control checkbox styles"
+                                        /></td>
+                                    <td class="col">{{name}}</td>
+                                </tr>
+                                {{/each}}
+                            </table>
+                        </div>
+                        <div class="cell size4 padding20">
+                            <h4>Templates</h4>
+                            <table class="table striped hovered cell-hovered border bordered table-condensed" id="tableTemplates">
+                                <tr>
+                                    <th class="col"><input type="checkbox" onClick="toggleTemplates(this)" /></th>
+                                    <th>Name</th>
+                                </tr>
+                                {{#each templates}}
+                                <tr>
+                                    <td class="col"><input id="cb_{{id}}" name="templateCB" type="checkbox" onClick="toggle(this)" class="input-control checkbox templates"
+                                        /></td>
+                                    <td class="col">{{id}}</td>
+                                </tr>
+                                {{/each}}
+                            </table>
+                        </div>
+                        <div class="cell padding20">
+                            <h3>Export</h3>
+                            <input id="btnExport" class="button primary" type="button" value="Export Selected">
 
-                            </div>
                         </div>
                     </div>
                 </div>
