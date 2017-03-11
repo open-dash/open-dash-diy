@@ -13,6 +13,13 @@
         },
         {
             "type": "node",
+            "request": "launch",
+            "name": "Launch Upgrade Program",
+            "program": "${workspaceRoot}\\upgrade.js",
+            "cwd": "${workspaceRoot}"
+        },
+        {
+            "type": "node",
             "request": "attach",
             "name": "Attach to Process",
             "port": 5858
