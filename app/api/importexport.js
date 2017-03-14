@@ -42,7 +42,12 @@ module.exports.set = function(app) {
 
     app.post('/importexport/upload', upload.single('upload-file'), (request, response, next) => {
         var importJson = request.file.buffer.toString();
-        var toImport = JSON.parse(importJson.slice(1));
+        var toImport;
+        if (importJson[0] != "{") {
+            toImport = JSON.parse(importJson.slice(1));
+        } else {
+            toImport = JSON.parse(importJson);
+        }
         //console.log(toImport);
 
         for (var i in toImport.styles) {
