@@ -8,6 +8,7 @@ $(document).ready(function() {
 
     $('#saveDashDevice').on("click", function() {
         var data = {};
+        data.dashDevId = this.dataset.dashdevid;
         data.id = this.dataset.id;
         data.dashid = this.dataset.dashid;
         data.name = $('#name').val();
@@ -18,7 +19,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/api/dashboard/' + data.dashid + '/device/' + data.id + '/save',
+            url: '/api/dashboard/' + data.dashid + '/device/' + data.dashDevId + '/save',
             dataType: 'json',
             data: JSON.stringify(data),
             contentType: 'application/json',

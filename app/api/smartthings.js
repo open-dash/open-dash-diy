@@ -32,7 +32,7 @@ module.exports.set = function(app) {
         });
     });
 
-    app.post('/api/smartthings/routines/:id', (request, response) => {
+    app.post('/api/smartthings/routines/send/:id', (request, response) => {
         response.setHeader('Content-Type', 'application/json');
         runRoutine(request.params.id, function(err, result) {
             if (err) {

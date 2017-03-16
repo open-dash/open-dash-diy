@@ -52,7 +52,7 @@ var getTile = function(dashId, id, callback) {
     });
     var device = null;
     dashboard.devices.forEach((dev) => {
-        if (dev.id == id) {
+        if (dev.dashDevId == id) {
             device = dev;
         };
     });

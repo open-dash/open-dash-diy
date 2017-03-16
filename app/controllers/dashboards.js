@@ -53,13 +53,15 @@ module.exports.set = function(app) {
             d.api = "smartthings";
             sortedDevices.push(d);
         });
-        smartthings.routines.forEach(r => {
-            r.api = "smartthings";
-            r.name = r.label;
-            r.commands = [{ command: "toggle" }];
-            r.type = "Routine";
-            sortedDevices.push(r);
-        })
+        if (smartthings.routines) {
+            smartthings.routines.forEach(r => {
+                r.api = "smartthings";
+                r.name = r.label;
+                r.commands = [{ command: "toggle" }];
+                r.type = "Routine";
+                sortedDevices.push(r);
+            })
+        }
         sortedDevices = sortedDevices.sort(sortByType);
         var dashboard = {};
         dashboards.dashboards.forEach((dash) => {
@@ -82,7 +84,7 @@ module.exports.set = function(app) {
         });
     });
 
-    app.get('/dashboards/:id/device/:deviceId', (request, response) => {
+    app.get('/dashboards/:id/device/:dashDevId', (request, response) => {
         var dashboard = {};
         for (var d in dashboards.dashboards) {
             if (dashboards.dashboards[d].id == request.params.id) {
@@ -91,7 +93,7 @@ module.exports.set = function(app) {
         }
         var device = {};
         dashboard.devices.forEach((dev) => {
-            if (dev.id == request.params.deviceId) {
+            if (dev.dashDevId == request.params.dashDevId) {
                 device = dev
             }
         });

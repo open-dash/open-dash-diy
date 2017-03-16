@@ -30,15 +30,19 @@ var processUpdates = function() {
             //console.log(JSON.stringify(result));
             for (i = 0; result.length > i; i++) {
                 // var ii = parseInt(i);
-                var tile = $('#details_' + result[i].id);
+                //var tile = $('#details_' + result[i].id);
+                var tile = $(".tile").find("[data-id='" + result[i].id + "']").end();
                 if (tile.length > 0) {
                     for (x = 0; result[i].attributes.length > x; x++) {
                         var attrib = result[i].attributes[x].name;
                         var value = result[i].attributes[x].currentValue;
-                        var current = $(tile).find("." + attrib).html();
-                        if (current && current != value) {
-                            $(tile).find("." + attrib).html(value).change();
-                        }
+                        $(tile).each(function() {
+                            var current = $(this).find("." + attrib).html();
+
+                            if (current && current != value) {
+                                $(this).find("." + attrib).html(value).change();
+                            }
+                        });
                     }
                 }
             }

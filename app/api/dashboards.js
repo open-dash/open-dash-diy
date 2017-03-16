@@ -90,7 +90,7 @@ var findDashDevice = function(dashId, deviceId, callback) {
     }
     var device = {};
     for (i = 0; dashboard.devices.length > i; i++) {
-        if (dashboard.devices[i].id == deviceId) {
+        if (dashboard.devices[i].dashDevId == deviceId) {
             device = dashboard.devices[i];
         }
     }
@@ -106,7 +106,7 @@ var saveDashDevice = function(dashId, deviceId, data, callback) {
     }
     var device = {};
     for (i = 0; dashboard.devices.length > i; i++) {
-        if (dashboard.devices[i].id == deviceId) {
+        if (dashboard.devices[i].dashDevId == deviceId) {
             device = dashboard.devices[i];
         }
     }
@@ -129,7 +129,7 @@ var findDevices = function(dashId, callback) {
     for (i = 0; dashboard.devices.length > i; i++) {
         if (dashboard.devices[i].enabled) {
             devices.push({
-                "id": dashboard.devices[i].id,
+                "id": dashboard.devices[i].dashDevId,
                 "order": dashboard.devices[i].order
             })
         };
@@ -147,90 +147,83 @@ var updateDashboard = function(cmd, id, data, callback) {
     }
     switch (cmd) {
         case "add":
-            var dashIds = dashboard.devices.map(e => e.id);
+            //var dashIds = dashboard.devices.map(e => e.id);
             if (data.type == "blank") {
                 var dashDevice = {};
                 dashDevice.name = "Blank Tile";
                 dashDevice.type = "Blank"
                 dashDevice.id = "Blank_" + uuid.v1();
                 dashDevice.template = "Blank";
-                dashDevice.enabled = true
-                dashDevice.order = "1"
-                dashboard.devices.push(dashDevice)
+                dashDevice.enabled = true;
+                dashDevice.order = "1";
+                dashDevice.dashDevId = uuid.v1();
+                dashboard.devices.push(dashDevice);
             } else {
                 for (var x in data) {
                     var match = false;
                     //check if already in list, remove if you want duplicate devices
-                    for (var d in dashIds) {
-                        if (dashIds[d] == data[x].id) { match = true }
-                    }
-                    if (match) {
-                        //console.log('already exists');
-                    } else {
-                        var device = {};
-                        var temps = templates.templates.map(e => e.id);
-                        //loop through smartthings devices
-                        if (data[x].type != "Routine") {
-                            for (i = 0; smartthings.devices.length > i; i++) {
-                                if (smartthings.devices[i].id == data[x].id) {
-                                    var dashDevice = smartthings.devices[i];
-                                    if (temps.indexOf(dashDevice.type) >= 0) {
-                                        dashDevice.template = dashDevice.type
-                                    } else {
-                                        for (var f in temps) {
-                                            var xx = temps[f];
-                                            if (dashDevice.type.toLowerCase().includes(temps[f].toLowerCase())) {
-                                                dashDevice.template = temps[f];
-                                            }
+                    //for (var d in dashIds) {
+                    //    if (dashIds[d] == data[x].id) { match = true }
+                    //}
+                    //if (match) {
+                    //console.log('already exists');
+                    //} else {
+                    var device = {};
+                    var temps = templates.templates.map(e => e.name);
+                    //loop through smartthings devices
+                    if (data[x].type != "Routine") {
+                        for (i = 0; smartthings.devices.length > i; i++) {
+                            if (smartthings.devices[i].id == data[x].id) {
+                                var dashDevice = smartthings.devices[i];
+                                if (temps.indexOf(dashDevice.type) >= 0) {
+                                    dashDevice.template = dashDevice.type
+                                } else {
+                                    for (var f in temps) {
+                                        var xx = temps[f];
+                                        if (dashDevice.type.toLowerCase().includes(temps[f].toLowerCase())) {
+                                            dashDevice.template = temps[f];
                                         }
-                                        if (dashDevice.template == null) { dashDevice.template = "default" }
                                     }
-                                    dashDevice.enabled = true
-                                    dashDevice.order = "99"
-                                    dashboard.devices.push(dashDevice)
+                                    if (dashDevice.template == null) { dashDevice.template = "default" }
                                 }
+                                dashDevice.enabled = true;
+                                dashDevice.order = "99";
+                                dashDevice.dashDevId = uuid.v1();
+                                dashboard.devices.push(dashDevice);
                             }
-                        } else {
-                            for (i = 0; smartthings.routines.length > i; i++) {
-                                if (smartthings.routines[i].id == data[x].id) {
-                                    var dashDevice = smartthings.routines[i];
-                                    dashDevice.template = "routine";
-                                    dashDevice.enabled = true
-                                    dashDevice.order = "99"
-                                    dashDevice.api = "smartthings";
-                                    dashDevice.name = smartthings.routines[i].label;
-                                    dashDevice.commands = [{ command: "toggle" }];
-                                    dashDevice.type = "Routine";
-                                    dashboard.devices.push(dashDevice)
-                                }
+                        }
+                    } else {
+                        for (i = 0; smartthings.routines.length > i; i++) {
+                            if (smartthings.routines[i].id == data[x].id) {
+                                var dashDevice = smartthings.routines[i];
+                                dashDevice.template = "routine";
+                                dashDevice.enabled = true
+                                dashDevice.order = "99"
+                                dashDevice.api = "smartthings";
+                                dashDevice.name = smartthings.routines[i].label;
+                                dashDevice.commands = [{ command: "toggle" }];
+                                dashDevice.type = "Routine";
+                                dashDevice.dashDevId = uuid.v1();
+                                dashboard.devices.push(dashDevice);
                             }
                         }
                     }
+                    //}
                 }
             }
             break;
 
         case "addcamera":
-            var dashIds = dashboard.devices.map(e => e.id);
-            for (var x in data) {
-                var match = false;
-                for (var d in dashIds) {
-                    if (dashIds[d] == data[x]) { match = true }
-                }
-                if (match) {
-                    //console.log('already exists');
-                } else {
-                    var device = {};
-                    for (i = 0; cameras.cameras.length > i; i++) {
-                        if (cameras.cameras[i].id == data[x]) {
-                            var dashDevice = cameras.cameras[i];
-                            dashDevice.template = "camera";
-                            dashDevice.enabled = true;
-                            dashDevice.order = "0";
-                            dashDevice.path = "/api/camera/" + dashDevice.id;
-                            dashboard.devices.push(dashDevice);
-                        }
-                    }
+
+            for (i = 0; cameras.cameras.length > i; i++) {
+                if (cameras.cameras[i].id == data[x]) {
+                    var dashDevice = cameras.cameras[i];
+                    dashDevice.template = "camera";
+                    dashDevice.enabled = true;
+                    dashDevice.order = "0";
+                    dashDevice.path = "/api/camera/" + dashDevice.id;
+                    dashDevice.dashDevId = uuid.v1();
+                    dashboard.devices.push(dashDevice);
                 }
             }
             break;
@@ -239,7 +232,7 @@ var updateDashboard = function(cmd, id, data, callback) {
             for (var deviceId in data) {
                 try {
                     for (i = 0; dashboard.devices.length > i; i++) {
-                        if (dashboard.devices[i].id == data[deviceId]) {
+                        if (dashboard.devices[i].dashDevId == data[deviceId]) {
                             dashboard.devices.splice([i], 1);
                         }
                     }

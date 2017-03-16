@@ -16,17 +16,20 @@ $(document).ready(function() {
 
             return sortStatus;
         });
-        dashboard.html("");
+        //dashboard.html("");
         var i = 1;
-        devices.forEach(dev => {
-            $.get('/device/' + dashboard[0].dataset.id + '/' + dev.id, function(data, status) {
-                if (status == "success") {
-                    tiles.push({ "order": dev.order, "html": data });
-                    finallyShowTiles(i);
-                    i++;
-                }
+        if (devices.length > 0) {
+            devices.forEach(dev => {
+                dashboard.html("");
+                $.get('/device/' + dashboard[0].dataset.id + '/' + dev.id, function(data, status) {
+                    if (status == "success") {
+                        tiles.push({ "order": dev.order, "html": data });
+                        finallyShowTiles(i);
+                        i++;
+                    }
+                });
             });
-        });
+        }
     });
 
     //Add Right Menu options specific to dashboard view
@@ -37,7 +40,7 @@ $(document).ready(function() {
 
 
 $(document.body).on('click', '.tile', function(e) {
-    var id = this.id;
+    var id = this.dataset.id;
     console.log(id)
     console.log("target is: " + e.target.className);
     var action = $(this).find('.' + e.target.className);
@@ -70,7 +73,7 @@ $(document.body).on('click', '.tile', function(e) {
             console.log("toggle routine");
             $.ajax({
                 type: 'POST',
-                url: '/api/smartthings/routines/' + id,
+                url: '/api/smartthings/routines/send/' + id,
                 dataType: 'json',
                 //data: JSON.stringify(data),
                 contentType: 'application/json',
