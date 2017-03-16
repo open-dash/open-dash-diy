@@ -169,7 +169,7 @@ var updateDashboard = function(cmd, id, data, callback) {
                     //console.log('already exists');
                     //} else {
                     var device = {};
-                    var temps = templates.templates.map(e => e.name);
+                    var temps = templates.templates.map(e => e.id);
                     //loop through smartthings devices
                     if (data[x].type != "Routine") {
                         for (i = 0; smartthings.devices.length > i; i++) {
