@@ -1,6 +1,6 @@
 console.log("Installing config files for a blank install")
 var fs = require('fs');
-var settings = { "settings": { "version": "0.5", "token": "", "apiUrl": "", "clientId": "", "clientSecret": "" } };
+var settings = { "settings": { "version": "0.5", "token": "", "apiUrl": "", "clientId": "", "clientSecret": "", "port": "3000" } };
 var updates = { "updates": "" };
 var smartthings = { "devices": "", "locations": "", "modes": "", "routines": "" };
 var dashboards = { "dashboards": [] };

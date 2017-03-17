@@ -1,12 +1,18 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+var port = 3000;
 const path = require('path');
 const request = require('request');
 const exphbs = require('express-handlebars');
 var controllers = require('./controllers');
+const appRoot = require('app-root-path');
+var SelfReloadJSON = require('self-reload-json');
+var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 var api = require('./api/');
 
+if (config.settings.port) {
+    port = config.settings.port;
+}
 controllers.set(app);
 api.set(app);
 app.use(express.static('public'));

@@ -1,6 +1,6 @@
 $(function() {
     $("#saveBtn").on('click', function(e) {
-        var settings = '{ "token" : "' + $('#token').val() + '", "apiUrl" : "' + $('#apiUrl').val() + '", "clientId" : "' + $('#clientId').val() + '", "clientSecret" : "' + $('#clientSecret').val() + '" }';
+        var settings = '{ "token" : "' + $('#token').val() + '", "apiUrl" : "' + $('#apiUrl').val() + '", "clientId" : "' + $('#clientId').val() + '", "clientSecret" : "' + $('#clientSecret').val() + '", "port" : "' + $('#port').val() + '" }';
         $.ajax({
             type: 'POST',
             url: '/api/settings/save',
@@ -14,4 +14,10 @@ $(function() {
             }
         });
     });
+});
+
+$(document).ready(function() {
+    if ($('#port').val() == "") {
+        $('#port').val("3000");
+    }
 });

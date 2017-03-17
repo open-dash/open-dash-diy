@@ -1,6 +1,10 @@
 <div style="background-color: #fff;color:#000;margin:0;opacity: .7;padding:15px">
     <h2>Settings</h2>
     <div>
+        <p>Port to run on: (will have to restart node application to take effect)</p>
+        <input type="text" name="port" id="port" value="{{settings.port}}" style="width:450px" class="input-control text">
+    </div>
+    <div>
         <h3>Token</h3>
         <p>Enter this to skip the oauth2 process if you have manually installed the smartapp and already have a token and url</p>
         <input type="text" name="token" id="token" value="{{settings.token}}" style="width:450px" class="input-control text">
