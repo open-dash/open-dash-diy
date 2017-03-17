@@ -76,7 +76,7 @@ $(function() {
 
     $("#getModes").on('click', function(e) {
         $('#loadingModes').show();
-        $('#modesTable').empty();
+        $('#modesArea').empty();
         $.ajax({
             type: 'GET',
             url: '/api/smartthings/modes',
