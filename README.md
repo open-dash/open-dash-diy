@@ -11,7 +11,7 @@ Prerequisites:
 Create Folder on OS you want to run from
 
 Command Line / Terminal
-"git clone https://github.com/pstuart/open-dash-node.git" //TODO insert actual url here
+"git clone https://github.com/open-dash/open-dash-node.git" 
 
 change into folder "open-dash-node"
 
@@ -21,6 +21,7 @@ run "npm install"
 Create Data Folder and JSON Files for Project
 run "node install.js"
 
+If upgrading, run "node upgrade.js"
 Run Open-Dash
 "node index.js"
 
@@ -28,11 +29,13 @@ Open Browser to "http://localhost:3000"
 
 Go To Settings
 
-//TODO do oauth2 process
+Insert your Client ID and Client Secret from the SmartApp Install Process
 
-Put in TOKEN and API URL and save settings
+Click Save
 
-After saving, you should see weather start to populate upper right near menu.  If so, you are connected to SmartThings Open-Dash API SmartApp
+Connect with SmartThings and authorize devices.
+
+After completing the oauth2 process, you should see weather start to populate upper right near menu.  If so, you are connected to SmartThings Open-Dash API SmartApp
 
 Go To Menu -> SmartThings
 
@@ -64,5 +67,8 @@ View Dashboard by clicking the dashboard name next to "edit"
 
 All devices right now come in with the default template that just shows all attributes and their values.  Go back into the edit screen and edit each device to pick the right template for the type of device.
 
+From there you can edit Styles and Templates or import/export them.
 
-Camera Documentation Coming Soon.
+Customize to your delight and enjoy!
+
+Submit bugs, issues and feature requests on the github repo "Issues" area.
