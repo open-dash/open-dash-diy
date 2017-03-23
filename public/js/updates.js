@@ -37,10 +37,12 @@ var processUpdates = function() {
                         var attrib = result[i].attributes[x].name;
                         var value = result[i].attributes[x].currentValue;
                         $(tile).each(function() {
-                            var current = $(this).find("." + attrib).html();
+                            if (this.dataset.id == result[i].id) {
+                                var current = $(this).find("." + attrib).html();
 
-                            if (current && current != value) {
-                                $(this).find("." + attrib).html(value).change();
+                                if (current && current != value) {
+                                    $(this).find("." + attrib).html(value).change();
+                                }
                             }
                         });
                     }
