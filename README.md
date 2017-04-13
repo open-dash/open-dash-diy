@@ -11,9 +11,9 @@ Prerequisites:
 Create Folder on OS you want to run from
 
 Command Line / Terminal
-"git clone https://github.com/open-dash/open-dash-node.git" 
+"git clone https://github.com/open-dash/open-dash-diy.git" 
 
-change into folder "open-dash-node"
+change into folder "open-dash-diy"
 
 Install node_modules via npm for Open-Dash
 run "npm install"
