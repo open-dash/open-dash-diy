@@ -34,8 +34,10 @@ module.exports.set = function(app) {
         var globalcss = Buffer.from(styles.styles.global, 'base64').toString();
         var css = "";
         for (var s in styles.styles.dashboards) {
-            if (s == dashboard.css.toString()) {
-                css = Buffer.from(styles.styles.dashboards[s].css, 'base64').toString();
+            if (dashboard.css) {
+                if (s == dashboard.css.toString()) {
+                    css = Buffer.from(styles.styles.dashboards[s].css, 'base64').toString();
+                }
             }
         }
         response.render('dashboard', {
