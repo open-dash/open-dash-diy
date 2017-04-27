@@ -1,4 +1,4 @@
-# open-dash-node
+# open-dash-diy
 Open-Dash Node.js core
 
 Open-Dash Node.js Install Instructions
@@ -7,6 +7,19 @@ Prerequisites:
 -Install Git (or download git zip file and expand)
 -Install Node.js https://nodejs.org/en/download/
 -Install the Open-Dash SmartApp API and remember to enable oauth, get TOKEN and API URL
+
+If Installing on a Raspberry Pi 2/3
+Raspberry Pi / Rasbian ships with an old version of node.
+sudo su
+apt-get update
+apt-get upgrade
+
+apt-get remove node
+
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+apt-get autoremove
 
 Create Folder on OS you want to run from
 
