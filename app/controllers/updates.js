@@ -18,7 +18,7 @@ module.exports.set = function(app) {
         }
         getUpdates(function(err, result) {
             if (err) {
-                response.send(500, { error: 'something went wrong' });
+                res.send(500, { error: 'something went wrong' });
             } else {
                 updates.updates = result;
                 updates.save();
