@@ -3,7 +3,16 @@ const request = require('request');
 const bodyParser = require('body-parser');
 var multer = require('multer')
 var storage = multer.memoryStorage()
-var upload = multer({ storage: storage })
+// GHSA-72gw-mp4g-v24j: multer >= 2.2.0 + fieldNestingDepth limits DoS via nested field names
+var upload = multer({
+    storage: storage,
+    limits: {
+        files: 1,
+        fields: 10,
+        fileSize: 5 * 1024 * 1024, // 5MB import JSON
+        fieldNestingDepth: 0
+    }
+})
 const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
