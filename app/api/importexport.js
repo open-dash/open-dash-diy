@@ -1,5 +1,4 @@
 const express = require('express');
-const request = require('request');
 const bodyParser = require('body-parser');
 var multer = require('multer')
 var storage = multer.memoryStorage()

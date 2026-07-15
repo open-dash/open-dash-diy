@@ -1,5 +1,5 @@
 const express = require('express');
-const request = require('request');
+const httpRequest = require('../lib/http');
 const bodyParser = require('body-parser');
 const app = express();
 var SelfReloadJSON = require('self-reload-json');
@@ -138,7 +138,7 @@ var sendCommand = function(id, cmd, value, callback) {
     //var token = config.settings.token;
     var url = config.settings.apiUrl + endpoint + '?access_token=' + config.settings.token;
 
-    request({
+    httpRequest({
         url: url,
         json: true
     }, function(error, response, body) {
@@ -156,7 +156,7 @@ var getDevices = function(callback) {
     var token = config.settings.token;
     var url = config.settings.apiUrl + endpoint + '?access_token=' + token;
 
-    request({
+    httpRequest({
         url: url,
         json: true
     }, function(error, response, body) {
@@ -179,7 +179,7 @@ var getRoutines = function(callback) {
     var token = config.settings.token;
     var url = config.settings.apiUrl + endpoint + '?access_token=' + token;
 
-    request({
+    httpRequest({
         url: url,
         json: true
     }, function(error, response, body) {
@@ -197,7 +197,7 @@ var runRoutine = function(id, callback) {
     var token = config.settings.token;
     var url = config.settings.apiUrl + endpoint + '?access_token=' + token;
 
-    request.post({
+    httpRequest.post({
         headers: { 'content-type': 'application/x-www-form-urlencoded' },
         url: url,
         json: true,
@@ -217,7 +217,7 @@ var getLocations = function(callback) {
     var token = config.settings.token;
     var url = config.settings.apiUrl + endpoint + '?access_token=' + token;
 
-    request({
+    httpRequest({
         url: url,
         json: true
     }, function(error, response, body) {
@@ -235,7 +235,7 @@ var getModes = function(callback) {
     var token = config.settings.token;
     var url = config.settings.apiUrl + endpoint + '?access_token=' + token;
 
-    request({
+    httpRequest({
         url: url,
         json: true
     }, function(error, response, body) {

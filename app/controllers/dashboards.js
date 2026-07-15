@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const exphbs = require('express-handlebars');
 var SelfReloadJSON = require('self-reload-json');
 const fs = require('fs');
 const bodyParser = require('body-parser');

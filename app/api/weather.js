@@ -1,5 +1,5 @@
 const express = require('express');
-const request = require('request');
+const httpRequest = require('../lib/http');
 const bodyParser = require('body-parser');
 const app = express();
 var SelfReloadJSON = require('self-reload-json');
@@ -26,7 +26,7 @@ module.exports.set = function(app) {
         var url = config.settings.apiUrl + endpoint + '?access_token=' + token;
         //console.log("getting devices from " + url);
 
-        request({
+        httpRequest({
             url: url,
             json: true
         }, function(error, response, body) {

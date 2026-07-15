@@ -1,7 +1,6 @@
 const express = require('express');
-const request = require('request');
 const bodyParser = require('body-parser');
-var uuid = require('uuid');
+const { v1: uuidv1 } = require('uuid');
 const fs = require('fs');
 const app = express();
 var SelfReloadJSON = require('self-reload-json');
@@ -152,11 +151,11 @@ var updateDashboard = function(cmd, id, data, callback) {
                 var dashDevice = {};
                 dashDevice.name = "Blank Tile";
                 dashDevice.type = "Blank"
-                dashDevice.id = "Blank_" + uuid.v1();
+                dashDevice.id = "Blank_" + uuidv1();
                 dashDevice.template = "Blank";
                 dashDevice.enabled = true;
                 dashDevice.order = "1";
-                dashDevice.dashDevId = uuid.v1();
+                dashDevice.dashDevId = uuidv1();
                 dashboard.devices.push(dashDevice);
             } else {
                 for (var x in data) {
@@ -188,7 +187,7 @@ var updateDashboard = function(cmd, id, data, callback) {
                                 }
                                 dashDevice.enabled = true;
                                 dashDevice.order = "99";
-                                dashDevice.dashDevId = uuid.v1();
+                                dashDevice.dashDevId = uuidv1();
                                 dashboard.devices.push(dashDevice);
                             }
                         }
@@ -203,7 +202,7 @@ var updateDashboard = function(cmd, id, data, callback) {
                                 dashDevice.name = smartthings.routines[i].label;
                                 dashDevice.commands = [{ command: "toggle" }];
                                 dashDevice.type = "Routine";
-                                dashDevice.dashDevId = uuid.v1();
+                                dashDevice.dashDevId = uuidv1();
                                 dashboard.devices.push(dashDevice);
                             }
                         }
@@ -222,7 +221,7 @@ var updateDashboard = function(cmd, id, data, callback) {
                     dashDevice.enabled = true;
                     dashDevice.order = "0";
                     dashDevice.path = "/api/camera/" + dashDevice.id;
-                    dashDevice.dashDevId = uuid.v1();
+                    dashDevice.dashDevId = uuidv1();
                     dashboard.devices.push(dashDevice);
                 }
             }
