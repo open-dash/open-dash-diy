@@ -1,5 +1,4 @@
 const express = require('express');
-const request = require('request');
 const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');

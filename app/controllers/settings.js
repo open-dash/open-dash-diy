@@ -1,15 +1,12 @@
 const express = require('express');
 const app = express();
-const exphbs = require('express-handlebars');
-const request = require('request');
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
-const dashboards = require('../../data/dashboards.json');
-var smartthings = new SelfReloadJSON(appRoot + '/data/smartthings.json');
 var styles = new SelfReloadJSON(appRoot + '/data/styles.json');
-const simpleOauthModule = require('simple-oauth2');
-var ip = require('ip');
+const { AuthorizationCode } = require('simple-oauth2');
+const httpRequest = require('../lib/http');
+const localIp = require('../lib/local-ip');
 var oauth2;
 var accessURL;
 var authorizationUri;
@@ -37,49 +34,53 @@ module.exports.set = function(app) {
         res.redirect(authorizationUri);
     });
 
-    app.get('/settings/callback', function(req, res) {
+    app.get('/settings/callback', async function(req, res) {
         const code = req.query.code;
         try {
             initOauth();
         } catch (err) {
             console.log("no client or secret set");
+            return res.status(500).send('OAuth not configured');
         }
-        var redirectUrl = "http://" + ip.address() + ":3000/settings/callback";
+        var redirectUrl = "http://" + localIp.address() + ":3000/settings/callback";
 
-        oauth2.authorizationCode.getToken({
-            code: code,
-            redirect_uri: redirectUrl
-        }, saveToken);
+        try {
+            const accessToken = await oauth2.getToken({
+                code: code,
+                redirect_uri: redirectUrl
+            });
+            const result = accessToken.token;
+            config.settings.token = result.access_token;
 
-        function saveToken(error, result) {
-            if (error) {
-                console.log('Access Token Error', error.message);
-            } else {
-                config.settings.token = result.access_token;
+            var sendreq = {
+                method: "GET",
+                uri: endpoints_uri + "?access_token=" + result.access_token
+            };
+            httpRequest(sendreq, function(err, res1, body) {
+                if (err) {
+                    console.log('Endpoints Error', err.message);
+                    return res.status(500).send('Failed to load endpoints');
+                }
+                var endpoints = JSON.parse(body);
+                //TODO store locations information location.id and location.home
+                //console.log(endpoints);
+                // we just show the final access URL and Bearer code
+                var access_url = endpoints[0].url
 
-                var sendreq = {
-                    method: "GET",
-                    uri: endpoints_uri + "?access_token=" + result.access_token
-                };
-                request(sendreq, function(err, res1, body) {
-                    var endpoints = JSON.parse(body);
-                    //TODO store locations information location.id and location.home
-                    //console.log(endpoints);
-                    // we just show the final access URL and Bearer code
-                    var access_url = endpoints[0].url
+                accessURL = 'https://graph.api.smartthings.com/' + access_url;
+                apiURL = endpoints[0].uri;
 
-                    accessURL = 'https://graph.api.smartthings.com/' + access_url;
-                    apiURL = endpoints[0].uri;
-
-                    config.settings.apiUrl = apiURL;
-                    config.save();
-                    res.render('settings', {
-                        version: config.settings.version,
-                        settings: config.settings
-                    });
-
+                config.settings.apiUrl = apiURL;
+                config.save();
+                res.render('settings', {
+                    version: config.settings.version,
+                    settings: config.settings
                 });
-            }
+
+            });
+        } catch (error) {
+            console.log('Access Token Error', error.message);
+            res.status(500).send('Access Token Error');
         }
     });
 
@@ -93,14 +94,14 @@ module.exports.set = function(app) {
                 'Authorization': 'Bearer ' + token
             }
         };
-        request(options, function(err, res1, body) {
+        httpRequest(options, function(err, res1, body) {
             var endpoints = JSON.parse(body);
             res.send('endpoints are: ' + endpoints[0].location.name + endpoints[0].uri);
         });
     });
 
     var initOauth = function() {
-        oauth2 = simpleOauthModule.create({
+        oauth2 = new AuthorizationCode({
             client: {
                 id: config.settings.clientId,
                 secret: config.settings.clientSecret
@@ -111,8 +112,8 @@ module.exports.set = function(app) {
                 authorizePath: '/oauth/authorize',
             },
         });
-        var redirectUrl = "http://" + ip.address() + ":3000/settings/callback";
-        authorizationUri = oauth2.authorizationCode.authorizeURL({
+        var redirectUrl = "http://" + localIp.address() + ":3000/settings/callback";
+        authorizationUri = oauth2.authorizeURL({
             redirect_uri: redirectUrl,
             scope: 'app',
             state: '3(#0/!~'

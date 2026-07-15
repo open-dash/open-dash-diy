@@ -2,8 +2,7 @@ const express = require('express');
 const app = express();
 var port = 3000;
 const path = require('path');
-const request = require('request');
-const exphbs = require('express-handlebars');
+const { engine } = require('express-handlebars');
 var controllers = require('./controllers');
 const appRoot = require('app-root-path');
 var SelfReloadJSON = require('self-reload-json');
@@ -25,7 +24,7 @@ app.listen(port, (err) => {
     console.log(`server is listening on ${port}`);
 });
 
-app.engine('.hbs', exphbs({
+app.engine('.hbs', engine({
     defaultLayout: 'main',
     extname: '.hbs',
     layoutsDir: path.join(__dirname, 'views/layouts')

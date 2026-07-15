@@ -1,5 +1,5 @@
 const express = require('express');
-const request = require('request');
+const httpRequest = require('../lib/http');
 const bodyParser = require('body-parser');
 const app = express();
 var SelfReloadJSON = require('self-reload-json');
@@ -20,13 +20,13 @@ module.exports.set = function(app) {
 };
 
 var getImage = function(id, callback) {
-    var request2 = require('request').defaults({ encoding: null });
+    var binaryRequest = httpRequest.defaults({ encoding: null });
     var camera = {};
     cameras.cameras.forEach((cam) => { camera = cam; });
 
-    request2.get(camera.url, function(error, response, body) {
+    binaryRequest.get(camera.url, function(error, response, body) {
         if (!error && response.statusCode == 200) {
-            data = "data:image/jpeg;base64," + new Buffer(body).toString('base64');
+            data = "data:image/jpeg;base64," + Buffer.from(body).toString('base64');
             //console.log(data);
             callback(null, body);
         }

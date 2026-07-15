@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const exphbs = require('express-handlebars');
 var SelfReloadJSON = require('self-reload-json');
 const bodyParser = require('body-parser');
 const appRoot = require('app-root-path');
