@@ -14,6 +14,7 @@ $(document).ready(function() {
         data.name = $('#name').val();
         data.enabled = $('#enabled').prop("checked");
         data.order = $('#order').val();
+        data.url = $('#url').val();
         data.template = $('#template').val();
         //console.log(data);
 

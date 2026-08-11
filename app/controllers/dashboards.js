@@ -113,6 +113,27 @@ module.exports.set = function(app) {
         });
     });
 
+    app.post('/dashboards/:id/device/:dashDevId/save', (request, response) => {
+        var deviceData = request.body;
+        var dashboard = dashboards.dashboards.find(d => d.id == request.params.id);
+        if (dashboard) {
+            var device = dashboard.devices.find(d => d.dashDevId == deviceData.dashDevId);
+            if (device) {
+                device.name = deviceData.name;
+                device.enabled = deviceData.enabled;
+                device.order = deviceData.order;
+                device.url = deviceData.url;
+                device.template = deviceData.template;
+                dashboards.save();
+                response.json({ success: true });
+            } else {
+                response.status(404).json({ success: false, message: 'Device not found' });
+            }
+        } else {
+            response.status(404).json({ success: false, message: 'Dashboard not found' });
+        }
+    });
+
     function sortByType(x, y) {
         return ((x.type == y.type) ? 0 : ((x.type > y.type) ? 1 : -1));
     }
