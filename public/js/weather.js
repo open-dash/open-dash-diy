@@ -1,5 +1,13 @@
 $(document).ready(function() {
     //alert("test");
+    getWeather();
+});
+
+setInterval(function() {
+    getWeather();
+}, 5200);
+
+var getWeather = function() {
     $.ajax({
         type: 'GET',
         url: '/api/weather',
@@ -20,4 +28,4 @@ $(document).ready(function() {
             });
         }
     });
-});
+};
