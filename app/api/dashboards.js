@@ -148,9 +148,9 @@ var updateDashboard = function(cmd, id, data, callback) {
 
         case "addcamera":
 
-            for (i = 0; cameras.cameras.length > i; i++) {
-                if (cameras.cameras[i].id == data[x]) {
-                    var dashDevice = cameras.cameras[i];
+            for (var ci = 0; cameras.cameras.length > ci; ci++) {
+                if (cameras.cameras[ci].id == data.id) {
+                    var dashDevice = cameras.cameras[ci];
                     dashDevice.template = "camera";
                     dashDevice.enabled = true;
                     dashDevice.order = "0";
