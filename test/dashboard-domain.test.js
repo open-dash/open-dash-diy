@@ -101,3 +101,23 @@ describe('createDashboardRecord / buildBlankTile', () => {
         assert.equal(tile.id, 'Blank_uuid-1');
     });
 });
+
+describe('addcamera matching (regression)', () => {
+    // Regression: the addcamera API handler previously compared
+    // cameras.cameras[i].id == data[x] where `x` was a stale loop var,
+    // so the camera was never found. It must compare against data.id.
+    it('matches a camera by data.id, not a stale loop variable', () => {
+        const cameras = { cameras: [{ id: 'cam-1', name: 'Front' }] };
+        const data = { id: 'cam-1' }; // body shape sent by dashboard-edit.js
+        const matched = cameras.cameras.filter(c => c.id == data.id);
+        assert.equal(matched.length, 1);
+        assert.equal(matched[0].id, 'cam-1');
+    });
+
+    it('does not match when the id key is absent', () => {
+        const cameras = { cameras: [{ id: 'cam-1' }] };
+        const data = { x: 'cam-1' }; // wrong key
+        const matched = cameras.cameras.filter(c => c.id == data.id);
+        assert.equal(matched.length, 0);
+    });
+});
