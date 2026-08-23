@@ -116,7 +116,7 @@ var updateDashboard = function(cmd, id, data, callback) {
                 for (var x in data) {
                     var temps = templates.templates.map(e => e.id);
                     if (data[x].type != "Routine") {
-                        for (i = 0; smartthings.devices.length > i; i++) {
+                        for (var i = 0; smartthings.devices.length > i; i++) {
                             if (smartthings.devices[i].id == data[x].id) {
                                 var dashDevice = smartthings.devices[i];
                                 dashDevice.template = domain.resolveDeviceTemplate(dashDevice.type, temps);
@@ -127,7 +127,7 @@ var updateDashboard = function(cmd, id, data, callback) {
                             }
                         }
                     } else {
-                        for (i = 0; smartthings.routines.length > i; i++) {
+                        for (var i = 0; smartthings.routines.length > i; i++) {
                             if (smartthings.routines[i].id == data[x].id) {
                                 var dashDevice = smartthings.routines[i];
                                 dashDevice.template = "routine";

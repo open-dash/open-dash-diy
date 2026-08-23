@@ -66,7 +66,10 @@ var saveTemplate = function(id, body, callback) {
 }
 
 var deleteTemplate = function(id, callback) {
-    templates.templates.splice([id], 1);
-    templates.save();
+    var index = templates.templates.findIndex(function(t) { return t.id == id; });
+    if (index !== -1) {
+        templates.templates.splice(index, 1);
+        templates.save();
+    }
     callback(null, "success");
 };

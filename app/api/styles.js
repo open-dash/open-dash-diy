@@ -79,7 +79,7 @@ var saveStyle = function(id, body, callback) {
 
 var deleteStyle = function(id, callback) {
     if (id != "global") {
-        styles.styles.dashboards.splice([id - 1], 1);
+        styles.styles.dashboards.splice(id - 1, 1);
         styles.save();
     }
     callback(null, "success");
