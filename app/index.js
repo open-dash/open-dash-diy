@@ -9,6 +9,18 @@ var SelfReloadJSON = require('self-reload-json');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 var api = require('./api/');
 
+// CSRF protection: verify Origin/Referer header matches Host for state-changing requests
+app.use(function csrfProtection(req, res, next) {
+    if (['POST', 'PUT', 'DELETE', 'PATCH'].indexOf(req.method) !== -1) {
+        var origin = req.headers.origin || req.headers.referer;
+        var host = req.headers.host;
+        if (origin && host && origin.indexOf(host) === -1) {
+            return res.status(403).json({ error: 'CSRF check failed' });
+        }
+    }
+    next();
+});
+
 if (config.settings.port) {
     port = config.settings.port;
 }
