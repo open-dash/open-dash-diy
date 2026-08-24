@@ -7,12 +7,16 @@ const hbs = require('handlebars');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 var dashboards = new SelfReloadJSON(appRoot + '/data/dashboards.json');
 var templates = new SelfReloadJSON(appRoot + '/data/templates.json');
+const domain = require('../lib/dashboard-domain');
 
 module.exports.set = function(app) {
 
     app.get('/device/:dashId/:id', (request, response) => {
         getTile(request.params.dashId, request.params.id, function(err, result) {
-            //var template = "devices/default";
+            // Missing dashboard or device: there is no tile to render.
+            if (!result) {
+                return response.status(404).send('Device not found');
+            }
 
             /*if (result.template) {
                 template = "devices/" + result.template.toLowerCase();
@@ -30,7 +34,6 @@ module.exports.set = function(app) {
             var html = compiled({ device: result });
 
             response.send(html);
-            response.end();
 
             /*
             response.render(template, {
@@ -43,18 +46,10 @@ module.exports.set = function(app) {
 };
 
 var getTile = function(dashId, id, callback) {
-    var dashboard = {};
-    dashboards.dashboards.forEach((dash) => {
-        if (dash.id == dashId) {
-            dashboard = dash
-        }
-    });
-    var device = null;
-    dashboard.devices.forEach((dev) => {
-        if (dev.dashDevId == id) {
-            device = dev;
-        };
-    });
-    //var type = device.type;
-    callback(null, device)
+    var dashboard = domain.findDashboard(dashboards.dashboards, dashId);
+    if (!dashboard) {
+        return callback(null, null);
+    }
+    var device = domain.findDashDevice(dashboard, id);
+    callback(null, device);
 };
