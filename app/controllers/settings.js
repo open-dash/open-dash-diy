@@ -85,7 +85,7 @@ module.exports.set = function(app) {
     });
 
     app.get('/settings/endpoints', function(req, res) {
-        var response = "";
+        var token = config.settings.token;
         var options = {
             uri: endpoints_uri + "?access_token=" + token,
             method: 'GET',
