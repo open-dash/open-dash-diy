@@ -56,7 +56,7 @@ var getStyle = function(tempid, callback) {
 }
 
 var saveStyle = function(id, body, callback) {
-    var style = new Buffer(body.content).toString("base64");
+    var style = Buffer.from(body.content).toString("base64");
     if (id == "0") {
         styles.styles.global = style;
     } else {
