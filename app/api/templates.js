@@ -51,7 +51,7 @@ var getTemplate = function(tempid, callback) {
 }
 
 var saveTemplate = function(id, body, callback) {
-    var template = new Buffer(body.content).toString("base64");
+    var template = Buffer.from(body.content).toString("base64");
     if (templates.templates[id]) {
         templates.templates[id].content = template;
         templates.templates[id].id = body.name;
