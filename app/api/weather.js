@@ -30,11 +30,10 @@ module.exports.set = function(app) {
             url: url,
             json: true
         }, function(error, response, body) {
-            if (error) {
-                callback(error)
-            }
-            if (!error && response.statusCode === 200) {
+            if (!error && response && response.statusCode === 200) {
                 callback(null, body);
+            } else {
+                callback(error || new Error('weather request failed with status ' + (response && response.statusCode)));
             }
         });
     };
