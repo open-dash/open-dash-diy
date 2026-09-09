@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var multer = require('multer')
 var storage = multer.memoryStorage()
-// GHSA-72gw-mp4g-v24j: multer >= 2.2.0 + fieldNestingDepth limits DoS via nested field names
+// GHSA-72gw-mp4g-v24j / GHSA-qfvm-cv95-jqjf: multer >= 2.3.0 + fieldNestingDepth limits DoS via nested field names
 var upload = multer({
     storage: storage,
     limits: {
