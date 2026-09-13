@@ -1,8 +1,4 @@
-const express = require('express');
-const app = express();
 var SelfReloadJSON = require('self-reload-json');
-const fs = require('fs');
-const bodyParser = require('body-parser');
 const appRoot = require('app-root-path');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 var dashboards = new SelfReloadJSON(appRoot + '/data/dashboards.json');

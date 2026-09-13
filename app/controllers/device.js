@@ -1,6 +1,3 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 const hbs = require('handlebars');

@@ -1,8 +1,4 @@
-const express = require('express');
-const bodyParser = require('body-parser');
 const { v1: uuidv1 } = require('uuid');
-const fs = require('fs');
-const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 const domain = require('../lib/dashboard-domain');
