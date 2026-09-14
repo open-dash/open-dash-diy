@@ -1,4 +1,3 @@
-const express = require('express');
 const bodyParser = require('body-parser');
 var multer = require('multer')
 var storage = multer.memoryStorage()
@@ -12,7 +11,6 @@ var upload = multer({
         fieldNestingDepth: 0
     }
 })
-const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');

@@ -1,5 +1,3 @@
-const express = require('express');
-const app = express();
 var SelfReloadJSON = require('self-reload-json');
 const appRoot = require('app-root-path');
 var styles = new SelfReloadJSON(appRoot + '/data/styles.json');
