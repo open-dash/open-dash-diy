@@ -38,6 +38,9 @@ If upgrading, run "node upgrade.js"
 Run Open-Dash
 "node index.js"
 
+Run the test suite
+"npm test"
+
 Open Browser to "http://localhost:3000"
 
 Go To Settings
