@@ -6,6 +6,7 @@ var smartthings = new SelfReloadJSON(appRoot + '/data/smartthings.json');
 var cameras = new SelfReloadJSON(appRoot + '/data/cameras.json');
 var styles = new SelfReloadJSON(appRoot + '/data/styles.json');
 var templates = new SelfReloadJSON(appRoot + '/data/templates.json');
+const domain = require('../lib/dashboard-domain');
 
 module.exports.set = function(app) {
 
@@ -20,12 +21,7 @@ module.exports.set = function(app) {
 
 
     app.get('/dashboards/:id', (request, response) => {
-        var dashboard = {};
-        dashboards.dashboards.forEach((dash) => {
-            if (dash.id == request.params.id) {
-                dashboard = dash
-            }
-        });
+        var dashboard = domain.findDashboard(dashboards.dashboards, request.params.id) || {};
         var globalcss = Buffer.from(styles.styles.global, 'base64').toString();
         var css = "";
         for (var s in styles.styles.dashboards) {
@@ -60,12 +56,7 @@ module.exports.set = function(app) {
             })
         }
         sortedDevices = sortedDevices.sort(sortByType);
-        var dashboard = {};
-        dashboards.dashboards.forEach((dash) => {
-            if (dash.id == request.params.id) {
-                dashboard = dash;
-            }
-        });
+        var dashboard = domain.findDashboard(dashboards.dashboards, request.params.id) || {};
         var sortedDashDevices = dashboard.devices.sort(sortByOrder);
         var style = []
         styles.styles.dashboards.forEach(temp => {
@@ -82,18 +73,8 @@ module.exports.set = function(app) {
     });
 
     app.get('/dashboards/:id/device/:dashDevId', (request, response) => {
-        var dashboard = {};
-        for (var d in dashboards.dashboards) {
-            if (dashboards.dashboards[d].id == request.params.id) {
-                dashboard = dashboards.dashboards[d];
-            }
-        }
-        var device = {};
-        dashboard.devices.forEach((dev) => {
-            if (dev.dashDevId == request.params.dashDevId) {
-                device = dev
-            }
-        });
+        var dashboard = domain.findDashboard(dashboards.dashboards, request.params.id) || {};
+        var device = domain.findDashDevice(dashboard, request.params.dashDevId) || {};
 
         //get device templates
         var temps = templates.templates.map(e => e.id.toLowerCase());
@@ -111,9 +92,9 @@ module.exports.set = function(app) {
 
     app.post('/dashboards/:id/device/:dashDevId/save', (request, response) => {
         var deviceData = request.body;
-        var dashboard = dashboards.dashboards.find(d => d.id == request.params.id);
+        var dashboard = domain.findDashboard(dashboards.dashboards, request.params.id);
         if (dashboard) {
-            var device = dashboard.devices.find(d => d.dashDevId == deviceData.dashDevId);
+            var device = domain.findDashDevice(dashboard, deviceData.dashDevId);
             if (device) {
                 device.name = deviceData.name;
                 device.enabled = deviceData.enabled;
