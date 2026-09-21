@@ -40,6 +40,13 @@ Run Open-Dash
 
 Open Browser to "http://localhost:3000"
 
+Running Tests
+The test suite lives in `test/` and runs with Node's built-in test runner
+(no extra dependencies). Run it with:
+run "npm test"
+This executes `node --test "test/**/*.test.js"` against every `*.test.js` file
+in the `test/` directory.
+
 Go To Settings
 
 Insert your Client ID and Client Secret from the SmartApp Install Process
