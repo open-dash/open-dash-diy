@@ -195,3 +195,44 @@ describe('deleteStyle index (regression)', () => {
         assert.deepEqual(result.map(s => s.name), ['a']);
     });
 });
+
+
+describe('legacy dashboard upgrade', () => {
+    it('backs up legacy records, fills missing fields, and preserves existing identifiers', () => {
+        const fs = require('node:fs');
+        const path = require('node:path');
+        const vm = require('node:vm');
+        const original = JSON.stringify({ dashboards: [{ id: '0', devices: [
+            { name: 'Legacy light', enabled: true },
+            { name: 'Camera', api: 'camera', dashDevId: 'existing-id' }
+        ] }] });
+        const writes = new Map();
+        const fakeFs = {
+            readFileSync(file) {
+                assert.equal(file, 'data/dashboards.json');
+                return original;
+            },
+            writeFileSync(file, contents) { writes.set(file, contents); },
+            writeFile(file, contents, callback) {
+                writes.set(file, contents);
+                callback(null);
+            }
+        };
+        // Execute the shipped migration; replace only its filesystem and UUID dependencies.
+        vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../upgrade.js'), 'utf8'), {
+            require(name) {
+                if (name === 'fs') return fakeFs;
+                if (name === 'uuid') return { v1: () => 'migrated-id' };
+                throw new Error(`Unexpected dependency: ${name}`);
+            },
+            console: { log() {}, error(error) { throw error; } }
+        });
+        assert.equal(writes.get('data/dashboards.bak'), original);
+        const migrated = JSON.parse(writes.get('data/dashboards.json'));
+        assert.deepEqual(migrated.dashboards[0].devices, [
+            { name: 'Legacy light', enabled: true, api: 'smartthings', dashDevId: 'migrated-id' },
+            { name: 'Camera', api: 'camera', dashDevId: 'existing-id' }
+        ]);
+        assert.equal(domain.findDashDevice(migrated.dashboards[0], 'migrated-id').name, 'Legacy light');
+    });
+});

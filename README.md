@@ -34,7 +34,11 @@ run "npm install"
 Create Data Folder and JSON Files for Project
 run "node install.js"
 
-If upgrading, run "node upgrade.js"
+If upgrading a legacy installation, stop Open-Dash and back up the `data/` folder,
+then run `node upgrade.js` from the project root. This fills missing `api` and
+`dashDevId` fields in existing dashboards; adding new devices does not migrate
+saved records. The command also writes `data/dashboards.bak` (overwriting any
+previous backup at that path), so keep your own backup before running it.
 Run Open-Dash
 "node index.js"
 
