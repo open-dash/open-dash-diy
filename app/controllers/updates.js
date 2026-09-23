@@ -4,16 +4,9 @@ const appRoot = require('app-root-path');
 var config = new SelfReloadJSON(appRoot + '/data/settings.json');
 var updates = new SelfReloadJSON(appRoot + '/data/updates.json');
 
-var doUpdates = false;
-
 module.exports.set = function(app) {
     app.get('/updates', function(req, res) {
         res.setHeader('Content-Type', 'application/json');
-        if (config.settings.token != "") {
-            doUpdates = true;
-        } else {
-            doUpdates = false
-        }
         getUpdates(function(err, result) {
             if (err) {
                 res.send(500, { error: 'something went wrong' });
@@ -26,7 +19,7 @@ module.exports.set = function(app) {
     });
 
     setInterval(function() {
-        if (doUpdates) {
+        if (config.settings.token != "") {
             getUpdates(function(err, result) {
                 if (err) {
                     console.log('something went wrong');
