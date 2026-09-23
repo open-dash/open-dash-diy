@@ -9,11 +9,10 @@ var doUpdates = false;
 module.exports.set = function(app) {
     app.get('/updates', function(req, res) {
         res.setHeader('Content-Type', 'application/json');
-        if (config.settings.token != "") {
-            doUpdates = true;
-        } else {
-            doUpdates = false
+        if (!config.settings.token) {
+            return res.status(401).json({ error: 'unauthorized' });
         }
+        doUpdates = true;
         getUpdates(function(err, result) {
             if (err) {
                 res.send(500, { error: 'something went wrong' });
