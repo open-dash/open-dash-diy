@@ -39,8 +39,20 @@ then run `node upgrade.js` from the project root. This fills missing `api` and
 `dashDevId` fields in existing dashboards; adding new devices does not migrate
 saved records. The command also writes `data/dashboards.bak` (overwriting any
 previous backup at that path), so keep your own backup before running it.
-Run Open-Dash
-"node index.js"
+Run Open-Dash with a separate dashboard password (at least 16 characters)
+in the service environment: `OPEN_DASH_PASSWORD`, and optionally
+`OPEN_DASH_USERNAME` (default `dashboard`). Keep these values out of tracked
+files and command history. Then run `node index.js`.
+
+Every page, asset, and API requires the browser's HTTP Basic login. The
+SmartThings token is only an upstream credential and does not authenticate
+visitors. Missing dashboard credentials return HTTP 503; invalid credentials
+return HTTP 401. Changing the password requires a server restart.
+
+Use HTTPS when accessing the dashboard over a network, since Basic credentials
+are only encoded in transit. For direct API writes, supply Basic authorization
+and an `Origin` header matching the dashboard URL. Browser requests supply this
+automatically. Cross-origin and origin-less mutations are rejected.
 
 Open Browser to "http://localhost:3000"
 
