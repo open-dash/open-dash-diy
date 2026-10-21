@@ -1,6 +1,18 @@
 # open-dash-diy
 Open-Dash Node.js core
 
+## Outbound HTTP and local cameras
+
+Outbound HTTP requests accept only HTTP(S) URLs without embedded credentials. Public hostnames are checked when the socket resolves them, and every redirect is checked again. Private, loopback, link-local, reserved, and metadata destinations are rejected by default. Responses are limited to 10 MiB and a 30-second deadline across the redirect chain.
+
+To enable a camera or another intentional local integration, set `OPEN_DASH_HTTP_ALLOWED_ORIGINS` in the server environment to its exact origin, including any non-default port. For example:
+
+```sh
+OPEN_DASH_HTTP_ALLOWED_ORIGINS='http://192.168.1.50:8080,https://camera.home:8443' npm start
+```
+
+Entries must be origins, without a path, query, or credentials. This grants access to that entire origin; configure only trusted devices. Request parameters cannot enable local access, and redirects to other local origins still require their own explicit entry. Credentials in headers are removed when a redirect changes origin. Camera failures return an HTTP error instead of leaving the request pending.
+
 Open-Dash Node.js Install Instructions
 
 Prerequisites:
