@@ -45,7 +45,6 @@ $(document.body).on('click', '.tile', function(e) {
     console.log("target is: " + e.target.className);
     var action = $(this).find('.' + e.target.className);
     var actioncmd = action[0].dataset.action;
-    var actiontoggle = action[0].dataset.command;
     var actionval = action.val();
 
     switch (actioncmd) {
