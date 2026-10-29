@@ -247,10 +247,6 @@ httpRequest.defaults = function defaults(defaultOptions) {
         return httpRequest(options, callback);
     };
 
-    wrapped.defaults = function nestedDefaults(more) {
-        return httpRequest.defaults(Object.assign({}, base, more || {}));
-    };
-
     return wrapped;
 };
 
